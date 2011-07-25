@@ -1,0 +1,102 @@
+body {
+  margin : 0;
+  padding : 0;
+}
+
+h2 {
+  font-size : 2em;
+  margin-bottom : 10px;
+}
+
+h3 {
+  font-size : 1.4em;
+}
+
+p {
+  margin-bottom : 1em;
+}
+
+#container {
+  margin : 0;
+  padding : 0;
+}
+
+#header {
+  background : #001a30;
+  position: absolute;
+  top: 0px;
+  left : 0px;
+  width : 100%;
+  height : 35px;
+}
+
+#header h1 {
+  float: left;
+}
+
+#header h1 a {
+  display: inline-block;
+  text-decoration: none;
+  color : #DB5E21;
+  padding : 10px;
+  background: #003763;
+}
+
+#header h1 a .highlight {
+  color : #FCA942;
+}
+
+#header h1 a:hover {
+  color : white;
+  background : #00457d;
+}
+
+#header #leftside {
+  float: left;
+}
+
+#header #rightside {
+  float: right;
+}
+
+#header ul {
+  float: left;
+  margin : 0;
+}
+
+#header ul li {
+  float: left;
+  list-style: none;
+}
+
+#header ul li a {
+  display: block;
+  text-decoration: none;
+  color : white;
+  padding : 10px;
+}
+
+#header ul li a:hover {
+  text-decoration: underline;
+  background: #003763;
+}
+
+#content {
+  margin : 0;
+  padding : 0;
+  margin-top : 35px;
+}
+
+#awesomeframe {
+  position:absolute; 
+  background:transparent;        
+  width:100%;
+  height:100%;
+  top:35px;
+  padding:0;
+  z-index: 1;
+}
+
+
+
+
