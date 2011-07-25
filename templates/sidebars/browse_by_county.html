@@ -1,0 +1,12 @@
+<div class="section browse_by_county">
+    <h2>Browse By County</h2>
+    <form name="form" id="my_form"> 
+        <select name="jump_menu" id="jump_menu" onchange="jump(this, 'parent')">
+        <option name="">Select a County</option>
+        <option name="">---------------</option>
+        {% for county in sidebar_counties %}
+            <option name="{{ county.name }}" value="/events/tagged/active">{{ county.name }}</option>
+        {% endfor %}
+        </select>
+    </form>
+</div>

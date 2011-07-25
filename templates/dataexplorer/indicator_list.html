@@ -1,0 +1,88 @@
+{% extends "global/base.html" %}
+
+{% load pagination_tags %}
+
+{% block content %}
+
+<p>{{ printthis }}</p>
+
+<ul class="data_list">
+
+    {% autopaginate indicators 5 %}
+
+	{% for indicator in indicators %}
+        {% include "dataexplorer/_indicator-compact.html" %}
+	{% endfor %}
+
+</ul>
+
+{% if not indicators %}
+
+    <p><em>Unfortunately, no indicators were found matching your query. You might try reducing the number of filters you're using, or try a different domain.</em></p>
+
+{% endif %}
+
+{% paginate %}
+
+
+{% endblock %}
+
+
+{% block sidebar_content %}
+
+    <div class="sidebar_form">
+    <form method="get">
+        
+    <div class="section show_domains">
+        <h2>Domain:</h2>
+        <select name="domain">
+            <option value="">All Domains</option>
+            {% for domain in all_domains %}
+                <option name="domain" value="{{ domain.slug }}" {% ifequal selected_domain domain.slug %}selected="selected"{% endifequal %}>{{ domain.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+
+    <div class="section show_formats">
+        <h2>Show Formats:</h2>
+        <ul class="checkbox_list clearfix">
+            {% for format in all_formats|dictsort:'name' %}
+                <li><input type="checkbox" name="selected_formats" value="{{ format.slug }}" {% if format.slug in selected_formats %}checked="checked"{% endif %}/> {{ format.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    
+    <div class="section show_county">
+        <h2>Show County:</h2>
+        <ul class="checkbox_list clearfix">
+            {% for county in sidebar_counties|dictsort:'name' %}
+                <li><input type="checkbox" name="selected_counties" value="{{ county.slug }}" {% if county.slug in selected_counties %}checked="checked"{% endif %}/> {{ county.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    
+    <div class="section show_geos">
+        <h2>Show Geographic Scopes:</h2>
+        <ul class="checkbox_list clearfix">
+            {% for geo in all_geos|dictsort:'name' %}
+                <li><input type="checkbox" name="selected_geos" value="{{ geo.slug }}" {% if geo.slug in selected_geos %}checked="checked"{% endif %}/> {{ geo.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    
+    <input type="submit" value="Submit" />
+
+    <hr />
+
+    </form>
+    </div>
+
+
+
+
+
+{% endblock %}

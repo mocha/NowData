@@ -1,0 +1,317 @@
+body {
+  font-size: 10pt;
+  line-height: 1.4em;
+  color: #333;
+  background: #E3E3E3 url(http://localhost/~mocha/nowdata-media/images/gradient_bg.gif) repeat-x;
+}
+
+#container {
+  width: 948px;
+  margin: auto;
+  background: white url(http://localhost/~mocha/nowdata-media/images/body_bg_pattern.gif) repeat-y;
+  padding-bottom : 40px;
+}
+
+#container-inner {
+  background: url(http://localhost/~mocha/nowdata-media/images/body_bg.jpg) no-repeat;
+}
+
+#header {
+}
+
+#left {
+  width : 540px;
+  float: left;
+}
+
+#left .inner {
+  margin : 40px 25px 25px 29px;
+}
+
+#left h2 {
+  font-size : 2.2em;
+  letter-spacing: -2px;
+  font-weight: normal;
+  font-style: normal;
+  padding-bottom : 25px;
+}
+
+#left h2 em { 
+  font-style: normal; 
+  color : #000; 
+}
+
+#right {
+  float: right;
+  width : 400px;
+}
+
+#right .inner {
+  margin : 40px 29px 25px 25px;
+}
+
+#right .section {
+  margin-bottom : 25px;
+  padding-bottom : 25px;
+  border-bottom : 1px solid #ccc;
+}
+
+#right .section h2 {
+  font-size : 1.4em;
+  letter-spacing : -1px;
+  margin-bottom : 20px;
+}
+
+#footer {
+  margin: 40px auto;
+  width : 800px;
+  text-align: center;
+  font-weight: bold;
+  color : #999;
+  font-size : .9em;
+}
+
+h1#pagetitle {
+  font-size : 3em;
+  font-weight: normal;
+  margin-bottom : 30px;
+  letter-spacing : -2px;
+  color : #db5e21;
+  line-height : .9em;
+}
+
+h1#pagetitle em {
+  font-style: normal;
+  color : #fca942;
+}
+
+h2#pagesubtitle {
+  margin-top : -20px;
+  font-size : 1.2em;
+  font-style: italic;
+  font-weight: normal;
+  color : #999;
+  letter-spacing: -1px;
+}
+
+h3,
+h3 a {
+  color : #00426d;
+}
+
+#menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: url(http://localhost/~mocha/nowdata-media/images/nowdata_menu.gif);
+}
+
+#menu li {
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+#menu li a {
+  display: block;
+  height: 40px;
+  background-image: url(http://localhost/~mocha/nowdata-media/images/nowdata_menu.gif);
+  background-repeat: no-repeat;
+  background-position-y: -4px;
+  text-indent: -9999px;
+  margin-top: 4px;
+}
+
+#menu li a.home { width: 87px; }
+#menu li a.about { width: 161px; background-position-x: -87px; }
+#menu li a.contact { width: 117px; background-position-x: -248px; }
+#menu li a.services { width: 189px; background-position-x: -365px; }
+/* 160 pixel spacer for "our projects:" */
+#menu li a.nowcast { margin-left: 160px; width: 123px; background-position-x: -714px; }
+#menu li a.nowtech { width: 111px; background-position-x: -837px; }
+
+
+
+#header h1 a {
+  background: url(http://localhost/~mocha/nowdata-media/images/header.gif) no-repeat top left;
+  display: block;
+  width: 948px;
+  height: 76px;
+  text-indent: -9999px;
+}
+
+.data_list h3 {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.data_list h3 a {
+  text-decoration : none;
+}
+
+.data_list,
+.data_list li {
+  margin : 0;
+  padding : 0;
+  list-style: none;
+}
+
+.data_list li.indicator {
+  margin-bottom : 20px;
+  padding-bottom : 20px;
+  border-bottom : 1px solid #ccc;
+}
+
+
+
+.pagination {
+  text-align: center;
+  color : #999;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.pagination .disabled2 {
+  visibility: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding : 0;
+  margin : 0;
+  display: block;
+  height: 0;
+  width : 0;
+}
+
+.pagination .next,
+.pagination .prev {
+  margin : 0 40px;
+}
+
+.pagination .next { margin-right : none; }
+.pagination .prev { margin-left : none; }
+
+.pagination a {
+  color : #ccc;
+  text-decoration: none;
+}
+
+.pagination a:hover {
+  color : #666;
+}
+
+.pagination .page {
+  padding : 2px;
+}
+
+.notes {
+  background : #dce4ea;
+  padding : 15px;
+  border : 2px solid #adb3b8;
+  margin-top : 25px;
+}
+
+hr { margin: 25px 0; }
+
+
+
+
+
+#list-projects_in_focus, 
+#list-projects_in_focus li { 
+  margin: 0;
+  padding : 0;
+  list-style: none;
+}
+
+#list-projects_in_focus li {
+  margin-bottom : 25px;
+  padding-bottom : 25px;
+  border-bottom : 1px solid #ccc;
+}
+
+#list-projects_in_focus li h3 {
+  font-size : 1.4em;
+  letter-spacing : -1px;
+  padding-bottom : 5px;
+}
+
+.readmorelink {
+  color: #FCA942;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.readmorelink:hover {
+  color: #DB5E21;
+}
+
+
+
+
+
+
+/* sidebar topic list for homepage and dataexplorer page */
+
+#right .section.browse_by_topic {
+  padding-bottom : 5px;
+}
+
+ul.topiclist {
+  margin : 0 -20px 0 0;
+  padding : 0;
+}
+
+ul.topiclist li {
+  margin : 0 20px 20px 0;
+  padding : 0;
+  float: left;
+  width : 163px;
+  color : #666;
+  list-style: none;
+  display: block;
+}
+
+ul.topiclist li img {
+  float: left;
+  margin-right : 10px;
+}
+
+ul.topiclist h3 a {
+  font-weight: bold;
+  color : #333;
+  font-size : .85em;
+  text-decoration: none;
+  display: block;
+  line-height: 1em;
+}
+
+
+
+
+
+/* get help exploring sidebar cta */
+.get_help_cta a {
+  font-size : 1.5em;
+  text-decoration: none;
+  color : #00416c;
+}
+
+
+ul.checkbox_list {
+  margin : 0;
+  margin-right : -10px;
+}
+
+ul.checkbox_list li {
+  display: block;
+  margin : 0 10px 10px 0;
+  float: left;
+  width : 168px;
+}
+
+
+
+
+
+

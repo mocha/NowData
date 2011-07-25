@@ -1,0 +1,17 @@
+{% extends "global/base.html" %}
+{% block content %}
+
+<ul class="data_list">
+
+{% for domain in domains %}
+
+	<li class="item {% cycle "even" "odd" %}">
+		<h3><a href="/indicators/by_domain/{{ domain.slug }}">{{ domain.name }}{% ifnotequal domain.indicator__count 0 %} ({{ domain.indicator__count }} indicators){% endifnotequal %}</a></h3>
+	</li>
+
+{% endfor %}
+
+</ul>
+
+
+{% endblock %}

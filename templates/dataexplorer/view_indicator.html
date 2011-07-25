@@ -1,0 +1,45 @@
+{% extends "global/base.html" %}
+{% block content %}
+
+{% if indicator.description %}
+	<h3>Description:</h3>
+	<p>{{ indicator.description }}</p>
+{% endif %}
+
+{% if indicator.year_start %}
+	<p>
+		<strong>Covers Year{% if indicator.year_end %}s{% endif %}:</strong>
+		{{ indicator.year_start }}
+		{% if indicator.year_end %} - {{ indicator.year_end }}{% endif %}
+	</p>
+{% endif %}
+
+{% if indicator.source %}
+	<p>
+		<strong>Source:</strong> <a href="{{ indicator.source.display_url }}" target="_blank">{{ indicator.source.name }}</a>
+	</p>
+{% endif %}
+
+{% if indicator.resource_set.all %}
+
+	<h3>Resources:</h3>
+	<ul class="data_list">
+		{% for resource in indicator.resource_set.all %}
+			{% include "dataexplorer/_resource_compact.html" %}
+		{% endfor %}
+	</ul>
+
+{% endif %}
+
+
+{% if request.user.is_staff %}
+	{% if indicator.notes %}
+		<div class="notes indicator">
+			<h3>Staff Notes:</h3>
+			<p>{{ indicator.notes|urlize|linebreaks }}</p>
+		</div>
+	{% endif %}
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,42 @@
+<h2>NOWDATA Admin</h2>
+
+<p>Logged in as {{ request.user.username }}</p>
+
+<hr />
+
+<h3>Indicators</h3>
+
+<ul>
+	<li>Create New Indicator</li>
+	<li><a href="/nowdata_admin/indicators/recently_added/">Recently Added Indicators</a></li>
+	<li>Browse All Indicators</li>
+	<li>
+		Indicators by status:
+		<ul>
+			<li><a href="/nowdata_admin/indicators/by_status/0">Unknown</a></li>
+			<li><a href="/nowdata_admin/indicators/by_status/1">Started, Incomplete</a></li>
+			<li><a href="/nowdata_admin/indicators/by_status/2">In Progress</a></li>
+			<li><a href="/nowdata_admin/indicators/by_status/3">Completed</a></li>
+		</ul>
+	</li>
+</ul>
+
+<hr />
+
+<h3>Resources</h3>
+
+<ul>
+	<li>Add New Resource to Indicator</li>
+	<li>Recently Added Resources</li>
+	<li>Browse Resources</li>
+</ul>
+
+<hr />
+
+<h3>Reports</h3>
+
+<ul>
+	<li>Indicators Without Resources</li>
+	<li><a href="/nowdata_admin/resources/without_descriptions">Resources Without Descriptions</a></li>
+	<li><a href="/nowdata_admin/indicators/without_resources">Incomplete Indicators</a></li>
+</ul>

@@ -1,0 +1,21 @@
+<li class="item indicator {% cycle "even" "odd" %}">
+
+	<h3><a href="/indicators/{{ indicator.slug }}">{{ indicator.name }}</a></h3>
+
+	{% if indicator.year_end or indicator.year_start %}
+		<p>Year{% if indicator.year_end %}s{% endif %}: {{ indicator.year_start }}{% if indicator.year_end %} - {{ indicator.year_end }}{% endif %}</p>
+	{% endif %}
+
+	{% if indicator.source %}
+		<p>Source: <a href="{{ indicator.source_url }}" target="_blank">{{ indicator.source.name }}</a></p>
+	{% endif %}
+	
+    {#  #}
+    {# <strong>Resources:</strong> #}
+    {# <ul> #}
+    {#  {% for resource in indicator.resource_set.all %} #}
+    {#      {% include "dataexplorer/_resource_compact.html" %} #}
+    {#  {% endfor %} #}
+    {# </ul> #}
+
+</li>
