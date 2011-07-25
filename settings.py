@@ -1,24 +1,12 @@
 # Django settings for nowdata project.
-
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+from local_settings import *
+import os.path
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+    ('Patrick Deuley', 'patrick.deuley@gmail.com'),
 )
 
 MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'nowdata_local',                      # Or path to database file if using sqlite3.
-        'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -42,20 +30,6 @@ USE_I18N = True
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
 USE_L10N = True
-
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
-
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '*0w#&ngn&@rre0&m*3_17a=r-8ve$m99i!i$(7j3hd44mhsoak'
@@ -87,13 +61,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'nowdata.dataexplorer.processors.sidebar_counties',
 )
 
-
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    "/Users/mocha/code/nowdata/templates/",
-)
+TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates'),)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
