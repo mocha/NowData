@@ -305,7 +305,7 @@ ul.checkbox_list {
 
 ul.checkbox_list li {
   display: block;
-  margin : 0 10px 10px 0;
+  margin : 0 10px 0px 0;
   float: left;
   width : 168px;
 }
@@ -317,10 +317,17 @@ ul.checkbox_list li {
 
 
 
+/* indicator page styles */
 
-/* iframed resource page styles */
+.source_name {
+  font-size : 1.2em;
+  color: #00426d;
+  font-weight: bold;
+}
 
-
+#content #left p {
+  margin-bottom : 1em;
+}
 
 
 

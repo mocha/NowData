@@ -1,10 +1,19 @@
 {% extends "global/base.html" %}
 {% block content %}
 
+
+{% if indicator.source %}
+	<h2 id="pagesubtitle">
+		<strong>Source:</strong> <a href="{{ indicator.source.display_url }}" target="_blank">{{ indicator.source.name }}</a>
+	</h2>
+{% endif %}
+
 {% if indicator.description %}
 	<h3>Description:</h3>
-	<p>{{ indicator.description }}</p>
+	<p>{{ indicator.description|linebreaks }}</p>
 {% endif %}
+
+
 
 {% if indicator.year_start %}
 	<p>
@@ -14,15 +23,12 @@
 	</p>
 {% endif %}
 
-{% if indicator.source %}
-	<p>
-		<strong>Source:</strong> <a href="{{ indicator.source.display_url }}" target="_blank">{{ indicator.source.name }}</a>
-	</p>
-{% endif %}
 
 {% if indicator.resource_set.all %}
 
-	<h3>Resources:</h3>
+    <hr />
+
+	<h3>Resources in this Indicator</h3>
 	<ul class="data_list">
 		{% for resource in indicator.resource_set.all %}
 			{% include "dataexplorer/_resource_compact.html" %}
@@ -34,6 +40,7 @@
 
 {% if request.user.is_staff %}
 	{% if indicator.notes %}
+	    <hr />
 		<div class="notes indicator">
 			<h3>Staff Notes:</h3>
 			<p>{{ indicator.notes|urlize|linebreaks }}</p>
@@ -43,3 +50,32 @@
 
 
 {% endblock %}
+
+
+
+{% block sidebar_content %}
+
+    {% if related_domain %}
+    <div class="section related_indicators">
+        <h3>Other Resources in this Topic ({{ related_domain.name }}):</h3>
+        <ul class="topiclist clearfix">
+            {% for indicator in related_domain_indicators %}
+                <li><a href="/indicators/{{ indicator.slug }}">{{ indicator.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    
+    
+    {% include "sidebars/browse_by_topic.html" %}
+    {% include "sidebars/browse_by_county.html" %}
+    
+
+{% endblock %}
+
+
+
+
+
+
+

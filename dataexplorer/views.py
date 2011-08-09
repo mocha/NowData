@@ -147,14 +147,18 @@ def all_indicators(request):
 
 
 
-
+import random
 def view_indicator(request, slug):
     indicator = Indicator.objects.get(slug = slug)
+    related_domain = random.choice(indicator.domain.all())
+    related_domain_indicators = related_domain.indicator_set.all()[:6]
     return render_to_response (
         'dataexplorer/view_indicator.html', 
         {
           'indicator': indicator,
           'title': indicator.name,
+          'related_domain':related_domain,
+          'related_domain_indicators':related_domain_indicators,
         }, 
         context_instance=RequestContext(request)
     )
