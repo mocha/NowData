@@ -4,19 +4,5 @@
 		{% if resource.resource_format %}<strong>Format: </strong>{{ resource.resource_format.name }}<br />{% endif %}
 		{% if resource.file %}<strong>File: </strong>{{ resource.file.url }}<br />{% endif %}
 		
-		{% if resource.topics.exists %}
-		<strong>Topics: </strong>
-			{% for topic in resource.topics.all %}
-				{{ topic.name }}{% if not forloop.last %}, {% endif %}
-			{% endfor %}<br />
-		{% endif %}
-		
-		{% if resource.variables.exists %}
-		<strong>Variables: </strong>
-			{% for variable in resource.variables.all %}
-				{{ variable.name }}{% if not forloop.last %}, {% endif %}
-			{% endfor %}<br />
-		{% endif %}
-		
 	</p>
 </li>

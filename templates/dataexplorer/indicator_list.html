@@ -33,6 +33,7 @@
     <div class="sidebar_form">
     <form method="get">
         
+            
     <div class="section show_domains">
         <h2>Domain:</h2>
         <select name="domain">
@@ -43,6 +44,17 @@
         </select>
     </div>
     
+    
+    <div class="section show_domains">
+        <h2>Domain Group:</h2>
+        <select name="domaingroup">
+            <option value="">All Domain Groups</option>
+            {% for domaingroup in all_domaingroups %}
+                <option name="domaingroup" value="{{ domaingroup.slug }}" {% ifequal selected_domaingroup domaingroup.slug %}selected="selected"{% endifequal %}>{{ domaingroup.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
     
     <div class="section show_county">
         <h2>Show County:</h2>
@@ -63,20 +75,21 @@
         </ul>
     </div>
     
-    
-    <div class="section show_formats">
-        <h2>Show Formats:</h2>
-        <ul class="checkbox_list clearfix">
-            {% for format in all_formats|dictsort:'name' %}
-                <li><input type="checkbox" name="selected_formats" value="{{ format.slug }}" {% if format.slug in selected_formats %}checked="checked"{% endif %}/> {{ format.name }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+
+    {# <div class="section show_formats"> #}
+    {#     <h2>Show Formats:</h2> #}
+    {#     <ul class="checkbox_list clearfix"> #}
+    {#         {% for format in all_formats|dictsort:'name' %} #}
+    {#             <li><input type="checkbox" name="selected_formats" value="{{ format.slug }}" {% if format.slug in selected_formats %}checked="checked"{% endif %}/> {{ format.name }}</li> #}
+    {#         {% endfor %} #}
+    {#     </ul> #}
+    {# </div> #}
 
     
     
     <input type="submit" value="Submit" />
-
+    <input type="reset" value="Reset">
+    
     <hr />
 
     </form>

@@ -31,7 +31,7 @@ def contact_page(request):
       'global/contact.html', 
       {
         'title': "Contact <em>Us</em>", 
-        'subtitle': "Your Resource for Community Data, Now."
+        'subtitle': "Please fill out the short form below and we will respond within forty-eight hours. Thanks!"
       }, 
       context_instance=RequestContext(request)
     )
@@ -54,7 +54,7 @@ def all_indicators(request):
   selected_formats = []
   selected_counties = []
   selected_geos = []
-  title = ""
+  title = "<em>Exploring:</em> All Domains"
   subtitle = ""
   
   
@@ -62,14 +62,21 @@ def all_indicators(request):
 
     try:
       selected_domain = request.GET['domain']
-      domain_filter = Q(domain__slug = selected_domain)
+      domain_filter = Q(domaingroup__domain__slug = selected_domain)
       title = "<em>Exploring:</em> " + Domain.objects.get(slug = selected_domain).name
-      
     except: 
       domain_filter = Q()
       selected_domain = ""
-      title = "<em>Exploring:</em> All Domains"
-    
+
+
+    try:
+      selected_domaingroup = request.GET['domaingroup']
+      domaingroup_filter = Q(domaingroup__slug = selected_domaingroup)
+      title = "<em>Exploring:</em> " + DomainGroup.objects.get(slug = selected_domaingroup).name
+    except: 
+      domaingroup_filter = Q()
+      selected_domaingroup = ""
+
 
     try:
       selected_formats = request.GET.getlist('selected_formats')
@@ -109,6 +116,7 @@ def all_indicators(request):
     
     indicators = Indicator.objects.filter(
       domain_filter,
+      domaingroup_filter,
       format_filter,
       county_filter,
       geo_filter,
@@ -127,6 +135,7 @@ def all_indicators(request):
   all_formats = ResourceFormat.objects.all()
   all_geos = Geo_Agg.objects.all()
   all_domains = Domain.objects.all()
+  all_domaingroups = DomainGroup.objects.all()
 
   return render_to_response (
       'dataexplorer/indicator_list.html',
@@ -137,7 +146,9 @@ def all_indicators(request):
         'all_formats':all_formats,
         'all_geos':all_geos,
         'all_domains':all_domains,
+        'all_domaingroups':all_domaingroups,
         'selected_domain':selected_domain,
+        'selected_domaingroup':selected_domaingroup,
         'selected_formats':selected_formats,
         'selected_counties':selected_counties,
         'selected_geos':selected_geos,
@@ -150,15 +161,15 @@ def all_indicators(request):
 import random
 def view_indicator(request, slug):
     indicator = Indicator.objects.get(slug = slug)
-    related_domain = random.choice(indicator.domain.all())
-    related_domain_indicators = related_domain.indicator_set.all()[:6]
+    related_domaingroup = random.choice(indicator.domaingroup.all())
+    related_domaingroup_indicators = related_domaingroup.indicator_set.all()[:6]
     return render_to_response (
         'dataexplorer/view_indicator.html', 
         {
           'indicator': indicator,
           'title': indicator.name,
-          'related_domain':related_domain,
-          'related_domain_indicators':related_domain_indicators,
+          'related_domaingroup': related_domaingroup,
+          'related_domaingroup_indicators' : related_domaingroup_indicators,
         }, 
         context_instance=RequestContext(request)
     )

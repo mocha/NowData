@@ -60,6 +60,7 @@ body {
   font-size : 1.4em;
   letter-spacing : -1px;
   margin-bottom : 20px;
+  color : #737a80;
 }
 
 #footer {
@@ -117,19 +118,31 @@ h3 a {
   height: 40px;
   background-image: url(http://localhost/~mocha/nowdata-media/images/nowdata_menu.gif);
   background-repeat: no-repeat;
-  background-position-y: -4px;
   text-indent: -9999px;
   margin-top: 4px;
 }
 
-#menu li a.home { width: 87px; }
-#menu li a.about { width: 161px; background-position-x: -87px; }
-#menu li a.contact { width: 117px; background-position-x: -248px; }
-#menu li a.services { width: 189px; background-position-x: -365px; }
+#menu li a.home { width: 87px; background-position: 0 -4px; }
+#menu li a.about { width: 161px; background-position: -87px -4px; }
+#menu li a.contact { width: 117px; background-position: -248px -4px; }
+#menu li a.services { width: 189px; background-position: -365px -4px; }
 /* 160 pixel spacer for "our projects:" */
-#menu li a.nowcast { margin-left: 160px; width: 123px; background-position-x: -714px; }
-#menu li a.nowtech { width: 111px; background-position-x: -837px; }
+#menu li a.nowcast { margin-left: 160px; width: 123px; background-position: -714px -4px; }
+#menu li a.nowtech { width: 111px; background-position: -837px -4px; }
 
+#menu li a.home:hover,
+#menu li a.home.active { background-position: 0 -48px; }
+#menu li a.about:hover,
+#menu li a.about.active { background-position: -87px -48px; }
+#menu li a.contact:hover,
+#menu li a.contact.active { background-position: -248px -48px; }
+#menu li a.services:hover,
+#menu li a.services.active { background-position: -365px -48px; }
+/* 160 pixel spacer for "our projects:" */
+#menu li a.nowcast:hover,
+#menu li a.nowcast.active { background-position: -714px -48px; }
+#menu li a.nowtech:hover,
+#menu li a.nowtech.active { background-position: -837px -48px; }
 
 
 #header h1 a {
@@ -253,10 +266,10 @@ hr { margin: 25px 0; }
 
 /* sidebar topic list for homepage and dataexplorer page */
 
-#right .section.browse_by_topic {
+/*#right .section.browse_by_topic {
   padding-bottom : 5px;
 }
-
+*/
 ul.topiclist {
   margin : 0 -20px 0 0;
   padding : 0;
@@ -332,3 +345,7 @@ ul.checkbox_list li {
 
 
 
+
+.resource-list li {
+  list-style: disc;
+}

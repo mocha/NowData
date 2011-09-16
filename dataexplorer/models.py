@@ -1,81 +1,34 @@
 from django.db import models
 from autoslug.fields import AutoSlugField
-from easy_thumbnails.fields import *
 from django.contrib.auth.models import User
-
-
-class State(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    description = models.TextField(blank=True)
-    slug = AutoSlugField(populate_from='name', unique_with='name')
-    notes = models.TextField(blank=True)
-    added_on = models.DateTimeField(auto_now_add = True)
-    added_by = models.ForeignKey(User, related_name = "states_added")
-    modified_on = models.DateTimeField(auto_now = True)
-    modified_by = models.ForeignKey(User, related_name = "states_modified")
-    def __str__(self):
-        return self.name
+import base64
 
 
 class County(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True)
-    state = models.ForeignKey(State)
     slug = AutoSlugField(populate_from='name', unique_with='name')
-    added_on = models.DateTimeField(auto_now_add = True)
-    added_by = models.ForeignKey(User, related_name = "countys_added")
-    modified_on = models.DateTimeField(auto_now = True)
-    modified_by = models.ForeignKey(User, related_name = "countys_modified")
-    def __str__(self):
-        return self.name
+    def __str__(self): return self.name
 
 
-class City(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    description = models.TextField(blank=True)
-    state = models.ForeignKey(State)
-    county = models.ForeignKey(County)
-    slug = AutoSlugField(populate_from='name', unique_with='name')
-    added_on = models.DateTimeField(auto_now_add = True)
-    added_by = models.ForeignKey(User, related_name = "cities_added")
-    modified_on = models.DateTimeField(auto_now = True)
-    modified_by = models.ForeignKey(User, related_name = "cities_modified")
-    def __str__(self):
-        return self.name
 
 
 class ResourceFormat(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    icon = ThumbnailerImageField( 
-        upload_to='images/resource_format/%Y/%m/%d',
-        resize_source=dict(size=(64, 64)),
-        null=True, blank=True)
     slug = AutoSlugField(populate_from='name', unique_with='name')
-    notes = models.TextField(blank=True, null=True)
-    added_on = models.DateTimeField(auto_now_add = True, blank=True, null=True)
-    added_by = models.ForeignKey(User, related_name = "resourceformats_added", blank=True, null=True)
-    modified_on = models.DateTimeField(auto_now = True, blank=True, null=True)
-    modified_by = models.ForeignKey(User, related_name = "resourceformats_modified", blank=True, null=True)
-    def __str__(self):
-        return self.name
+    def __str__(self): return self.name
+
+
 
 
 class ResourceVariable(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    icon = ThumbnailerImageField( 
-        upload_to='images/resource_format/%Y/%m/%d',
-        resize_source=dict(size=(64, 64)),
-        null=True, blank=True)    
     slug = AutoSlugField(populate_from='name', unique_with='name')
-    notes = models.TextField(blank=True)
-    added_on = models.DateTimeField(auto_now_add = True)
-    added_by = models.ForeignKey(User, related_name = "resourcevariables_added")
-    modified_on = models.DateTimeField(auto_now = True)
-    modified_by = models.ForeignKey(User, related_name = "resourcevariables_modified")
-    def __str__(self):
-        return self.name
-    class Meta:
-        ordering = ["name"]
+    def __str__(self): return self.name
+    class Meta: ordering = ["name"]
+
+
+
 
 class Resource(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -84,68 +37,47 @@ class Resource(models.Model):
     url = models.URLField(blank=True, null=True)
     resource_file = models.FileField(upload_to="somewhere/", blank=True)
     variables = models.ManyToManyField(ResourceVariable, blank=True)
-    image = ThumbnailerImageField( 
-        upload_to='images/resource/%Y/%m/%d',
-        resize_source=dict(size=(300, 300)),
-        null=True, blank=True)
     slug = AutoSlugField(populate_from='name', unique_with='name')
     notes = models.TextField(blank=True, null=True)
     added_on = models.DateTimeField(auto_now_add = True, blank=True, null=True)
     added_by = models.ForeignKey(User, related_name = "resources_added", blank=True, null=True)
     modified_on = models.DateTimeField(auto_now = True, blank=True, null=True)
     modified_by = models.ForeignKey(User, related_name = "resources_modified", blank=True, null=True)
-    def __str__(self):
-        return self.name
-    class Meta:
-        ordering = ["name"]
-    def __unicode__(self):
-        return u'%s' % (self.name)
+    def __str__(self): return self.name
+    def __unicode__(self): return u'%s' % (self.name)
+    class Meta: ordering = ["name"]
 
-    # data importing fields - these need to get organized in to other data models
-    # meanwhile, they live here because that's where the old data had them
-    #     
-    # IndicatorResourceID = models.CharField(max_length=255, blank=True, null=True)
-    # IndicatorID = models.CharField(max_length=255, blank=True, null=True)
-    # ResourceTypeID = models.CharField(max_length=255, blank=True, null=True)
-    # ResourceLocationID = models.CharField(max_length=255, blank=True, null=True)
-    # OrignalDataSetFileInfo = models.CharField(max_length=255, blank=True, null=True)
-    # OriginalDataSetNotes = models.CharField(max_length=255, blank=True, null=True)
-    # ReportTitle = models.CharField(max_length=255, blank=True, null=True)
-    # ApplicationName = models.CharField(max_length=255, blank=True, null=True)
-    # DocID = models.CharField(max_length=255, blank=True, null=True)
-    # tblName = models.CharField(max_length=255, blank=True, null=True)
-    # CellVar = models.CharField(max_length=255, blank=True, null=True)
-    # CellVarHeading = models.CharField(max_length=255, blank=True, null=True)
-    # ColVar = models.CharField(max_length=255, blank=True, null=True)
-    # ColHeading = models.CharField(max_length=255, blank=True, null=True)
-    # NumberCategories = models.CharField(max_length=255, blank=True, null=True)
-    # CatVar1 = models.CharField(max_length=255, blank=True, null=True)
-    # CatVar1Heading = models.CharField(max_length=255, blank=True, null=True)
-    # CatVar2 = models.CharField(max_length=255, blank=True, null=True)
-    # CatVar2Heading = models.CharField(max_length=255, blank=True, null=True)
-    # CatVar3 = models.CharField(max_length=255, blank=True, null=True)
-    # CatVar3Heading = models.CharField(max_length=255, blank=True, null=True)
-    # 
-    
+    IndicatorResourceID = models.TextField(blank=True, null=True)
+    ResourceTypeID = models.TextField(blank=True, null=True)
+    ResourceLocationID = models.TextField(blank=True, null=True)
+    OrignalDataSetFileInfo = models.TextField(blank=True, null=True)
+    OriginalDataSetNotes = models.TextField(blank=True, null=True)
+    ApplicationName = models.TextField(blank=True, null=True)
+    DocID = models.TextField(blank=True, null=True)
+    tblName = models.TextField(blank=True, null=True)
+    CellVar = models.TextField(blank=True, null=True)
+    CellVarHeading = models.TextField(blank=True, null=True)
+    ColVar = models.TextField(blank=True, null=True)
+    ColHeading = models.TextField(blank=True, null=True)
+    NumberCategories = models.TextField(blank=True, null=True)
+    CatVar1 = models.TextField(blank=True, null=True)
+    CatVar1Heading = models.TextField(blank=True, null=True)
+    CatVar2 = models.TextField(blank=True, null=True)
+    CatVar2Heading = models.TextField(blank=True, null=True)
+    CatVar3 = models.TextField(blank=True, null=True)
+    CatVar3Heading = models.TextField(blank=True, null=True)
+
+
 
 
 class Domain(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    description = models.TextField(blank=True)
-    icon = ThumbnailerImageField( 
-        upload_to='images/domain/%Y/%m/%d',
-        resize_source=dict(size=(64, 64)),
-        null=True, blank=True)
+    description = models.TextField(blank=True, null=True)
+    # relationship goes the other way around - groups belong to domains
+    # group = models.ForeignKey("DomainGroup")
     slug = AutoSlugField(populate_from='name', unique_with='name')
-    notes = models.TextField(blank=True)
-    added_on = models.DateTimeField(auto_now_add = True)
-    added_by = models.ForeignKey(User, related_name = "domains_added")
-    modified_on = models.DateTimeField(auto_now = True)
-    modified_by = models.ForeignKey(User, related_name = "domains_modified")
-    def __str__(self):
-        return self.name
-    class Meta:
-        ordering = ["name"]
+    def __str__(self): return self.name
+    class Meta: ordering = ["name"]
 
 
 
@@ -154,21 +86,9 @@ class DomainGroup(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True)
     domain = models.ForeignKey(Domain)
-    icon = ThumbnailerImageField( 
-        upload_to='images/domain_group/%Y/%m/%d',
-        resize_source=dict(size=(64, 64)),
-        null=True, blank=True
-    )
     slug = AutoSlugField(populate_from='name', unique_with='name')
-    notes = models.TextField(blank=True)
-    added_on = models.DateTimeField(auto_now_add = True)
-    added_by = models.ForeignKey(User, related_name = "Domaingroups_added")
-    modified_on = models.DateTimeField(auto_now = True)
-    modified_by = models.ForeignKey(User, related_name = "Domaingroups_modified")
-    def __str__(self):
-        return self.name
-    class Meta:
-        ordering = ["name"]
+    def __str__(self): return self.name
+    class Meta: ordering = ["name"]
 
 
 
@@ -177,13 +97,7 @@ class Geo_Agg(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True) 
     slug = AutoSlugField(populate_from='name', unique_with='name')
-    notes = models.TextField(blank=True)
-    added_on = models.DateTimeField(auto_now_add = True)
-    added_by = models.ForeignKey(User, related_name = "indicatorlevelofagg_added")
-    modified_on = models.DateTimeField(auto_now = True)
-    modified_by = models.ForeignKey(User, related_name = "indicatorlevelofagg_modified")
-    def __str__(self):
-        return self.name
+    def __str__(self): return self.name
 
 
 
@@ -202,8 +116,7 @@ class Source(models.Model):
     modified_on = models.DateTimeField(auto_now = True)
     modified_by = models.ForeignKey(User, related_name = "sources_modified")
     slug = AutoSlugField(populate_from='name', unique_with='name')
-    def __str__(self):
-        return self.name
+    def __str__(self): return self.name
 
 
 
@@ -214,65 +127,104 @@ class Indicator(models.Model):
     year_start = models.IntegerField()
     year_end = models.IntegerField()
     source = models.ForeignKey(Source, blank=True, null=True)
-    domain = models.ManyToManyField(Domain, blank = True)
     counties = models.ManyToManyField(County, blank = True)
-    domaingroup = models.ManyToManyField(DomainGroup, blank=True)
     levels_of_aggregation = models.ManyToManyField(Geo_Agg, blank=True)
-    image = ThumbnailerImageField( 
-      upload_to='images/indicator/%Y/%m/%d',
-      resize_source=dict(size=(300, 300)),
-      null=True, blank=True)
+    # domain = models.ManyToManyField(Domain, blank = True)
+    domaingroup = models.ManyToManyField(DomainGroup, blank=True)
+
     in_focus = models.BooleanField()
+    STATUS_CHOICES = ( (0, 'Unknown'), (1, 'Started, Incomplete'), (2, 'In Progress'), (3, 'Completed'), )
+    status = models.IntegerField(choices=STATUS_CHOICES)
+
     slug = AutoSlugField(populate_from='name', unique_with='name')
     notes = models.TextField(blank=True, null=True)
     added_on = models.DateTimeField(auto_now_add = True, blank=True, null=True)
     added_by = models.ForeignKey(User, related_name = "indicators_added", blank=True, null=True)
     modified_on = models.DateTimeField(auto_now = True, blank=True, null=True)
     modified_by = models.ForeignKey(User, related_name = "", blank=True, null=True)
-    STATUS_CHOICES = (
-      (0, 'Unknown'),
-      (1, 'Started, Incomplete'),
-      (2, 'In Progress'),
-      (3, 'Completed'),
-    )
-    status = models.IntegerField(choices=STATUS_CHOICES)
-    def __str__(self):
-        return self.name
-    class Meta:
-        ordering = ["name"]
-    def __unicode__(self):
-        return u'%s' % (self.name)
+
+    def __str__(self): return self.name
+    def __unicode__(self): return u'%s' % (self.name)
+    class Meta: ordering = ["name"]
     
-    # data importing fields - these need to get organized in to other data models
-    # meanwhile, they live here because that's where the old data had them
-    
-    # CategorizedBy = models.CharField(max_length=255, blank=True, null=True)
-    # FolderPath = models.CharField(max_length=255, blank=True, null=True)
-    # DataSource_url = models.URLField(blank=True, null=True)
-    # 
-    # PrimaryContactID = models.CharField(max_length=255, blank=True, null=True)
-    # Secondary1ContactID = models.CharField(max_length=255, blank=True, null=True)
-    # Secondary2ContactID = models.CharField(max_length=255, blank=True, null=True)
-    # Intermediary_Contact = models.CharField(max_length=255, blank=True, null=True)
-    # 
-    # Time_Unit = models.CharField(max_length=255, blank=True, null=True)
-    # Suggest_Denom = models.CharField(max_length=255, blank=True, null=True)
-    # Limitations = models.CharField(max_length=255, blank=True, null=True)
-    # Strengths = models.CharField(max_length=255, blank=True, null=True)
-    # Restraints = models.CharField(max_length=255, blank=True, null=True)
-    # Files = models.CharField(max_length=255, blank=True, null=True)
-    # Spec_Proj = models.CharField(max_length=255, blank=True, null=True)
-    # 
-    # 
+    # import fields - disable after data import is complete
+    IndicatorID = models.TextField(blank=True, null=True)
+    OldIndicatorID = models.TextField(blank=True, null=True)
+    Enabled = models.TextField(blank=True, null=True)
+    IndicatorName = models.TextField(blank=True, null=True)
+    CategorizedBy = models.TextField(blank=True, null=True)
+    Date_Acq = models.TextField(blank=True, null=True)
+    RenewalDate = models.TextField(blank=True, null=True)
+    MOU = models.TextField(blank=True, null=True)
+    SourceAgencyID = models.TextField(blank=True, null=True)
+    OriginalSourceAgencyID = models.TextField(blank=True, null=True)
+    FolderPath = models.TextField(blank=True, null=True)
+    PrimaryContactID = models.TextField(blank=True, null=True)
+    Secondary1ContactID = models.TextField(blank=True, null=True)
+    Secondary2ContactID = models.TextField(blank=True, null=True)
+    DataSource_url = models.TextField(blank=True, null=True)
+    Intermediary_Contact = models.TextField(blank=True, null=True)
+    # Co_All = models.TextField(blank=True, null=True)
+    # Co_Bexar = models.TextField(blank=True, null=True)
+    # Co_Atascosa = models.TextField(blank=True, null=True)
+    # Co_Bandera = models.TextField(blank=True, null=True)
+    # Co_Comal = models.TextField(blank=True, null=True)
+    # Co_Frio = models.TextField(blank=True, null=True)
+    # Co_Gillespie = models.TextField(blank=True, null=True)
+    # Co_Guadalupe = models.TextField(blank=True, null=True)
+    # Co_Karnes = models.TextField(blank=True, null=True)
+    # Co_Kendall = models.TextField(blank=True, null=True)
+    # Co_Kerr = models.TextField(blank=True, null=True)
+    # Co_Medina = models.TextField(blank=True, null=True)
+    # Co_Wilson = models.TextField(blank=True, null=True)
+    # Geog_County = models.TextField(blank=True, null=True)
+    # Geog_City = models.TextField(blank=True, null=True)
+    # Geog_Zip = models.TextField(blank=True, null=True)
+    # Geog_Address = models.TextField(blank=True, null=True)
+    # Geog_Census_Tract = models.TextField(blank=True, null=True)
+    # Geog_Blk_Group = models.TextField(blank=True, null=True)
+    # Geog_County_Precinct = models.TextField(blank=True, null=True)
+    # Geog_City_Council_District = models.TextField(blank=True, null=True)
+    # Geog_School_District = models.TextField(blank=True, null=True)
+    # Geog_Other = models.TextField(blank=True, null=True)
+    DataPeriod = models.TextField(blank=True, null=True)
+    Time_Unit = models.TextField(blank=True, null=True)
+    Suggest_Denom = models.TextField(blank=True, null=True)
+    Limitations = models.TextField(blank=True, null=True)
+    Strengths = models.TextField(blank=True, null=True)
+    Restraints = models.TextField(blank=True, null=True)
+    Files = models.TextField(blank=True, null=True)
+    Spec_Proj = models.TextField(blank=True, null=True)
 
 
 
 
 
+class IndicatorGroup(models.Model):
+  DomainID = models.IntegerField()
+  IndicatorGroupID = models.IntegerField()
+  IndicatorID = models.IntegerField()
 
-    
-    
 
+
+
+class ResourceFile(models.Model):
+
+  _data = models.TextField(db_column='data', blank=True)
+  def set_data(self, data): self._data = base64.encodestring(data)
+  def get_data(self): return base64.decodestring(self._data)
+  data = property(get_data, set_data)
+
+  IndicatorResourceID = models.TextField(blank=True, null=True)
+  ProtectionCode = models.TextField(blank=True, null=True)
+  AppType = models.TextField(blank=True, null=True)
+  DocType = models.TextField(blank=True, null=True)
+  DocSize = models.TextField(blank=True, null=True)
+  DocDescription = models.TextField(blank=True, null=True)
+  # Doc = models.TextField(blank=True, null=True)
+  UploadUser = models.TextField(blank=True, null=True)
+  DateUpdated = models.TextField(blank=True, null=True)
+  IPAddress = models.TextField(blank=True, null=True)
 
 
 
