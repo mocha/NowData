@@ -14,29 +14,59 @@
 {% endif %}
 
 
-
-{% if indicator.year_start %}
-	<p>
-		<strong>Covers Year{% if indicator.year_end %}s{% endif %}:</strong>
-		{{ indicator.year_start }}
-		{% if indicator.year_end %} - {{ indicator.year_end }}{% endif %}
-	</p>
-{% endif %}
-
-
 {% if indicator.resource_set.all %}
 
-    <hr />
-
 	<h3>Resources in this Indicator</h3>
-	<ul class="data_list">
+	<ul class="resource_list">
 		{% for resource in indicator.resource_set.all %}
 			<li class="item {% cycle "even" "odd" %}">
-      	<a href="/indicators/{{ indicator.slug }}/{{ resource.slug }}">{{ resource.name }}</a>
+      	{% if resource.url or resource.resource_file %}
+          <a href="/indicators/{{ indicator.slug }}/{{ resource.slug }}">{{ resource.name }}</a>
+        {% else %}
+          {{ resource.name }}
+        {% endif %}
+      	{% if resource.resource_format %}<br /><span class="metainfo format">{{ resource.resource_format.name }}</span>{% endif %}
       </li>
 		{% endfor %}
 	</ul>
 
+{% endif %}
+
+
+{% if indicator.year_start %}
+
+  <hr />
+	<p>
+		<h3>Covers Year{% if indicator.year_end %}s{% endif %}:</h3>
+		{{ indicator.year_start }}
+		{% if indicator.year_end %} - {{ indicator.year_end }}{% endif %}
+	</p>
+	
+  {% if indicator.datasource_url %}
+    <p>Datasource: {{ indicator.datasource_url }}</p>
+  {% endif %}
+{% endif %}
+
+
+{% if indicator_domains %}
+  <hr />
+  <h3>Filed in Topics:</h3>
+	<ul>
+    {% for domain in indicator_domains %}
+      <li><a href="/indicators/?domain={{ domain.slug}}">{{ domain.name }}</a></li>
+    {% endfor %}
+	</ul>
+{% endif %}
+
+
+{% if indicator.domaingroup.all %}
+  <hr />
+  <h3>Filed in Subtopics:</h3>
+	<ul>
+    {% for domaingroup in indicator.domaingroup.all %}
+      <li><a href="/indicators/?domain={{ domaingroup.domain.slug}}&amp;domaingroup={{ domaingroup.slug }}">{{ domaingroup.name }}</a></li>
+    {% endfor %}
+	</ul>
 {% endif %}
 
 

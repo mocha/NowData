@@ -214,15 +214,28 @@ def all_indicators(request):
 import random
 def view_indicator(request, slug):
     indicator = Indicator.objects.get(slug = slug)
-    related_domaingroup = random.choice(indicator.domaingroup.all())
-    related_domaingroup_indicators = related_domaingroup.indicator_set.all()[:6]
+    indicator_domains = []
+    for domaingroup in indicator.domaingroup.all(): indicator_domains.append(domaingroup.domain)
+    indicator_domains = set(indicator_domains)
+
+    # try:
+    #   related_domaingroup = random.choice(indicator.domaingroup.all())
+    # except:
+    #   related_domaingroup = ""
+    # 
+    # try:
+    #   related_domaingroup_indicators = related_domaingroup.indicator_set.all()[:6]
+    # except:
+    #   related_domaingroup_indicators = ""
+
     return render_to_response (
         'dataexplorer/view_indicator.html', 
         {
           'indicator': indicator,
           'title': indicator.name,
-          'related_domaingroup': related_domaingroup,
-          'related_domaingroup_indicators' : related_domaingroup_indicators,
+          'indicator_domains':indicator_domains,
+          # 'related_domaingroup': related_domaingroup,
+          # 'related_domaingroup_indicators' : related_domaingroup_indicators,
         }, 
         context_instance=RequestContext(request)
     )

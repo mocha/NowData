@@ -181,7 +181,9 @@ h3 a {
   border-bottom : 1px solid #ccc;
 }
 
-
+.data_list li.indicator h3 a {
+  color: #00426D
+}
 
 .pagination {
   text-align: center;
@@ -459,4 +461,19 @@ a.options_toggle {
 
 .browse_all h2 a:hover {
   text-decoration: underline;
+}
+
+.metainfo.format {
+  color : #999;
+  font-size: .8em;
+  font-style: italic;
+  margin-top: 0px;
+  padding-top : 0px;
+  display: block;
+  line-height: 1em;
+}
+
+
+.resource_list li {
+  margin-top : 1em;
 }
