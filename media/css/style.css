@@ -322,30 +322,36 @@ ul.topiclist .metadata {
 }
 
 .topiclist .health-and-safety .icon {
-  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/HealthSafety.JPG) no-repeat;
+  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/HealthSafety_30x30.gif) no-repeat;
 }
 
 .topiclist .employment-economy .icon {
-  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/EmploymentEconomy.JPG) no-repeat;
+  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/EmploymentEconomy_30x30.gif) no-repeat;
 }
 
 .topiclist .education .icon {
-  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/Education.JPG) no-repeat;
+  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/Education_30x30.gif) no-repeat;
 }
 
 .topiclist .people .icon {
-  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/People.jpg) no-repeat;
+  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/People_30x30.gif) no-repeat;
 }
 
 .topiclist .built-natural-environment .icon {
-  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/BuiltNaturalEnvironment.JPG) no-repeat;
+  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/BuiltNaturalEnvironment_30x30.gif) no-repeat;
 }
 
 .topiclist .employment-economy .icon {
-  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/EmploymentEconomy.JPG) no-repeat;
+  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/EmploymentEconomy_30x30.gif) no-repeat;
 }
 
+.crosstabs.icon {
+  background: url(http://localhost/~mocha/nowdata-media/images/icon_crosstab_30x30.gif) no-repeat;
+}
 
+.weave.icon {
+  background: url(http://localhost/~mocha/nowdata-media/images/icon_weave_30x30.gif) no-repeat;
+}
 
 
 
