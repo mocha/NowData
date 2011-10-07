@@ -47,6 +47,16 @@ def services_page(request):
     )
 
 
+def help_page(request):
+    return render_to_response (
+      'global/help.html', 
+      {
+        'title': "Help and FAQs", 
+      }, 
+      context_instance=RequestContext(request)
+    )
+
+
 
 import operator
 def all_indicators(request):
@@ -54,44 +64,80 @@ def all_indicators(request):
   selected_formats = []
   selected_counties = []
   selected_geos = []
-  title = "<em>Exploring:</em> All Domains"
+  title = ""
   subtitle = ""
+  selected_domain = ""
+  search_query = ""
+  selected_domaingroup = ""
+  advanced_options = False
   
   
   if request.GET:
+    
+    try:
+      search_query = request.GET['search_query']
+      if search_query != "":
+        search_filter = Q(name__icontains = search_query)
+        title = "<em>Indicators matching:</em> \"" + search_query + "\""
+      else:
+        search_filter = Q()
 
+    except:
+      search_filter = Q()
+      search_query = ""
+
+
+    # set the domain
     try:
       selected_domain = request.GET['domain']
       domain_filter = Q(domaingroup__domain__slug = selected_domain)
-      title = "<em>Exploring:</em> " + Domain.objects.get(slug = selected_domain).name
+      if not title:
+        title = "<em>Exploring:</em> " + Domain.objects.get(slug = selected_domain).name
+      else: 
+        subtitle = "In the topic " + Domain.objects.get(slug = selected_domain).name
     except: 
       domain_filter = Q()
       selected_domain = ""
-
-
+      domaingroup_filter = Q()
+      selected_domaingroup = ""
+      
+    
+    # set the subdomain
     try:
       selected_domaingroup = request.GET['domaingroup']
       domaingroup_filter = Q(domaingroup__slug = selected_domaingroup)
-      title = "<em>Exploring:</em> " + DomainGroup.objects.get(slug = selected_domaingroup).name
+      if selected_domaingroup: advanced_options = True
+
+      if (not selected_domain) or (selected_domain == ""):
+        domaingroup = DomainGroup.objects.get(slug = selected_domaingroup)
+        selected_domain = Domain.objects.get(name = domaingroup.domain).slug
+        # debug = selected_domain
+      
+      if subtitle == "":
+        subtitle = "In subtopic " + DomainGroup.objects.get(slug = selected_domaingroup).name
+      else:
+        subtitle = subtitle + " and in subtopic " + DomainGroup.objects.get(slug = selected_domaingroup).name
     except: 
       domaingroup_filter = Q()
       selected_domaingroup = ""
 
 
-    try:
-      selected_formats = request.GET.getlist('selected_formats')
-      format_filter = reduce(operator.or_, [Q(resource__resource_format__slug = str(format)) for format in selected_formats])
-      selected_format_subtitle_list = ""
-      for format in selected_formats:
-        selected_format_subtitle_list = selected_format_subtitle_list + " " + format + ", "
-      subtitle = "Including indicators with " + selected_format_subtitle_list
-    except: format_filter = Q()
+    # try:
+    #   selected_formats = request.GET.getlist('selected_formats')
+    #   format_filter = reduce(operator.or_, [Q(resource__resource_format__slug = str(format)) for format in selected_formats])
+    #   selected_format_subtitle_list = ""
+    #   advanced_options = True
+    #   for format in selected_formats:
+    #     selected_format_subtitle_list = selected_format_subtitle_list + " " + format + ", "
+    #   subtitle = "Including indicators with " + selected_format_subtitle_list
+    # except: format_filter = Q()
 
 
     try: 
       selected_counties = request.GET.getlist('selected_counties')
       county_filter = reduce(operator.or_, [Q(counties__slug = str(county)) for county in selected_counties])      
       selected_county_subtitle_list = ""
+      advanced_options = True
       for county in selected_counties:
         selected_county_subtitle_list = selected_county_subtitle_list + " " + County.objects.get(slug=county).name + " County, "
       if subtitle == "":
@@ -105,6 +151,7 @@ def all_indicators(request):
       selected_geos = request.GET.getlist('selected_geos')
       geo_filter = reduce(operator.or_, [Q(levels_of_aggregation__slug = str(geo)) for geo in selected_geos])     
       selected_geo_subtitle_list = ""
+      advanced_options = True
       for geo in selected_geos:
         selected_geo_subtitle_list = selected_geo_subtitle_list + " " + Geo_Agg.objects.get(slug=geo).name + ", "
       if subtitle == "":
@@ -115,18 +162,16 @@ def all_indicators(request):
 
     
     indicators = Indicator.objects.filter(
+      search_filter,
       domain_filter,
       domaingroup_filter,
-      format_filter,
+      # format_filter,
       county_filter,
       geo_filter,
     ).distinct()
-    # title = "There's a GET!"
-    # subtitle = "It's simply stunning."
 
   else:
     indicators = Indicator.objects.all()
-    title = "<em>Exploring:</em> All Indicators"
     subtitle = "Listing all indicators in our database"
     domain = ""
     format = ""
@@ -135,7 +180,12 @@ def all_indicators(request):
   all_formats = ResourceFormat.objects.all()
   all_geos = Geo_Agg.objects.all()
   all_domains = Domain.objects.all()
-  all_domaingroups = DomainGroup.objects.all()
+  if selected_domain:
+    all_domaingroups = DomainGroup.objects.filter(domain__slug = selected_domain)
+  else:
+    all_domaingroups = []
+    
+  if not title: title = "<em>Exploring:</em> All Indicators"
 
   return render_to_response (
       'dataexplorer/indicator_list.html',
@@ -147,11 +197,14 @@ def all_indicators(request):
         'all_geos':all_geos,
         'all_domains':all_domains,
         'all_domaingroups':all_domaingroups,
+        'search_query':search_query,
         'selected_domain':selected_domain,
         'selected_domaingroup':selected_domaingroup,
         'selected_formats':selected_formats,
         'selected_counties':selected_counties,
         'selected_geos':selected_geos,
+        'advanced_options':advanced_options,
+        # 'debug':debug,
       }, 
       context_instance=RequestContext(request)
   )

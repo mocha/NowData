@@ -29,8 +29,12 @@
 	</div>
 	
 </div>
- 
-<iframe id="awesomeframe" frameborder="0" noresize="noresize" src="{{ resource.url }}"></iframe> 
+
+{% if resource.resource_file %}
+  <iframe id="awesomeframe" frameborder="0" noresize="noresize" src="{{ resource.resource_file.url }}"></iframe>
+{% else %}
+  <iframe id="awesomeframe" frameborder="0" noresize="noresize" src="{{ resource.url }}"></iframe>
+{% endif %}
 
 </body> 
 </html>

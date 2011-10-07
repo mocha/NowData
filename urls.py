@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     (r'^about/$', about_page),
     (r'^contact/$', contact_page),
     (r'^community_services/$', services_page),
+    (r'^help/$', help_page),
 
     (r'^indicators/$', all_indicators),
 

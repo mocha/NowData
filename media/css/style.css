@@ -5,6 +5,12 @@ body {
   background: #E3E3E3 url(http://localhost/~mocha/nowdata-media/images/gradient_bg.gif) repeat-x;
 }
 
+a,
+a.readmorelink:hover,
+ul.topiclist h3 a:hover {
+  text-decoration: underline;
+}
+
 #container {
   width: 948px;
   margin: auto;
@@ -51,8 +57,8 @@ body {
 }
 
 #right .section {
-  margin-bottom : 25px;
-  padding-bottom : 25px;
+  margin-bottom : 20px;
+  padding-bottom : 20px;
   border-bottom : 1px solid #ccc;
 }
 
@@ -280,6 +286,7 @@ ul.topiclist li {
   padding : 0;
   float: left;
   width : 163px;
+  height : 40px;
   color : #666;
   list-style: none;
   display: block;
@@ -293,11 +300,53 @@ ul.topiclist li img {
 ul.topiclist h3 a {
   font-weight: bold;
   color : #333;
-  font-size : .85em;
   text-decoration: none;
   display: block;
   line-height: 1em;
 }
+
+ul.topiclist .metadata {
+  color : #999;
+  font-size : .85em;
+  line-height: 1.5em;
+}
+
+.topiclist .icon {
+  width : 30px;
+  height: 30px;
+  display: block;
+  background: #333;
+  float: left;
+  margin-right: 8px;
+  text-indent: -9999px;
+}
+
+.topiclist .health-and-safety .icon {
+  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/HealthSafety.JPG) no-repeat;
+}
+
+.topiclist .employment-economy .icon {
+  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/EmploymentEconomy.JPG) no-repeat;
+}
+
+.topiclist .education .icon {
+  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/Education.JPG) no-repeat;
+}
+
+.topiclist .people .icon {
+  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/People.jpg) no-repeat;
+}
+
+.topiclist .built-natural-environment .icon {
+  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/BuiltNaturalEnvironment.JPG) no-repeat;
+}
+
+.topiclist .employment-economy .icon {
+  background: url(http://localhost/~mocha/nowdata-media/images/topic_icons/EmploymentEconomy.JPG) no-repeat;
+}
+
+
+
 
 
 
@@ -348,4 +397,60 @@ ul.checkbox_list li {
 
 .resource-list li {
   list-style: disc;
+}
+
+
+
+
+#right form .inline_form_items h2,
+form .inline_form_items select {
+  display: inline-block;
+  margin: 0px;
+  padding: 0px;
+  margin-right: .5em;
+}
+
+
+
+
+.num_results {
+  font-style: italic;
+  color: #999;
+  font-size: .8em;
+  margin-top : -25px;
+  margin-bottom : 15px;
+}
+
+.toggleable_item {
+  display: none;
+}
+
+a.toggle_resources {
+  font-weight: bold;
+  color : #666;
+}
+
+a.options_toggle {
+  color: #737A80;
+  font-size: 1.4em;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+  display: block;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#right .browse_all h2 {
+  margin : 0px;
+  padding : 0px;
+  font-size: 1.6em;
+}
+
+.browse_all h2 a {
+  color: #737A80;
+  text-decoration: none;
+}
+
+.browse_all h2 a:hover {
+  text-decoration: underline;
 }

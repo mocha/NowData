@@ -9,6 +9,19 @@ $(document).ready(function(){
   });
 
 
+  $('a.toggle_resources').click(function(event){
+    event.preventDefault();
+    $(this).next().dequeue().slideToggle();
+    return false;
+  });
+  
+  
+  $('a.options_toggle').click(function(event){
+    event.preventDefault();
+    $(this).prev().dequeue().slideToggle();
+    return false;
+  });
+
   // $('#right .browse_by_topic').hide();
 
 

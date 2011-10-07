@@ -4,11 +4,15 @@
 
 {% block content %}
 
-<p>{{ printthis }}</p>
+{# <p>Debug sez: {{ advanced_options }}</p> <hr /> #}
+
+{% ifnotequal indicators.count 0 %}
+  <div class="num_results">{{ indicators.count }} indicators found.</div>
+{% endifnotequal %}
 
 <ul class="data_list">
 
-    {% autopaginate indicators 5 %}
+  {% autopaginate indicators 5 %}
 
 	{% for indicator in indicators %}
         {% include "dataexplorer/_indicator-compact.html" %}
@@ -18,7 +22,7 @@
 
 {% if not indicators %}
 
-    <p><em>Unfortunately, no indicators were found matching your query. You might try reducing the number of filters you're using, or try a different domain.</em></p>
+    <p><em>Unfortunately, no indicators were found matching your query. You might try reducing the number of filters you're using, or try a different topic.</em></p>
 
 {% endif %}
 
@@ -31,61 +35,62 @@
 {% block sidebar_content %}
 
     <div class="sidebar_form">
-    <form method="get">
-        
+    <form id="form1" method="get">
+    
+    <div class="section search_query inline_form_items">
+        <h2>Search for:</h2>
+        <input type="text" name="search_query" value="{{ search_query }}">
+    </div>
             
-    <div class="section show_domains">
-        <h2>Domain:</h2>
+    <div class="section show_domains inline_form_items">
+        <h2>Topic:</h2>
         <select name="domain">
-            <option value="">All Domains</option>
+            <option value="">All Topics</option>
             {% for domain in all_domains %}
                 <option name="domain" value="{{ domain.slug }}" {% ifequal selected_domain domain.slug %}selected="selected"{% endifequal %}>{{ domain.name }}</option>
             {% endfor %}
         </select>
     </div>
     
+    <div class="{% if not advanced_options %}toggleable_item{% endif %}">
+  
+      {% if all_domaingroups %}
+      
+        <div class="section show_domains inline_form_items">
+            <h2>Subtopic:</h2>
+            <select name="domaingroup">
+                <option value="">All Subtopics</option>
+                {% for domaingroup in all_domaingroups %}
+                    <option name="domaingroup" value="{{ domaingroup.slug }}" {% ifequal selected_domaingroup domaingroup.slug %}selected="selected"{% endifequal %}>{{ domaingroup.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+      
+      {% endif %}
     
-    <div class="section show_domains">
-        <h2>Domain Group:</h2>
-        <select name="domaingroup">
-            <option value="">All Domain Groups</option>
-            {% for domaingroup in all_domaingroups %}
-                <option name="domaingroup" value="{{ domaingroup.slug }}" {% ifequal selected_domaingroup domaingroup.slug %}selected="selected"{% endifequal %}>{{ domaingroup.name }}</option>
-            {% endfor %}
-        </select>
+      <div class="section show_county collapsable_ul">
+          <h2>Show Counties:</h2>
+          <ul class="checkbox_list clearfix">
+              {% for county in sidebar_counties|dictsort:'name' %}
+                  <li><input type="checkbox" name="selected_counties" value="{{ county.slug }}" {% if county.slug in selected_counties %}checked="checked"{% endif %}/> {{ county.name }}</li>
+              {% endfor %}
+          </ul>
+      </div>
+      
+      
+      <div class="section show_geos">
+          <h2>Show Geographic Scopes:</h2>
+          <ul class="checkbox_list clearfix">
+              {% for geo in all_geos|dictsort:'name' %}
+                  <li><input type="checkbox" name="selected_geos" value="{{ geo.slug }}" {% if geo.slug in selected_geos %}checked="checked"{% endif %}/> {{ geo.name }}</li>
+              {% endfor %}
+          </ul>
+      </div>
+
     </div>
 
-    
-    <div class="section show_county">
-        <h2>Show County:</h2>
-        <ul class="checkbox_list clearfix">
-            {% for county in sidebar_counties|dictsort:'name' %}
-                <li><input type="checkbox" name="selected_counties" value="{{ county.slug }}" {% if county.slug in selected_counties %}checked="checked"{% endif %}/> {{ county.name }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    
-    
-    <div class="section show_geos">
-        <h2>Show Geographic Scopes:</h2>
-        <ul class="checkbox_list clearfix">
-            {% for geo in all_geos|dictsort:'name' %}
-                <li><input type="checkbox" name="selected_geos" value="{{ geo.slug }}" {% if geo.slug in selected_geos %}checked="checked"{% endif %}/> {{ geo.name }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    
+    <a class="options_toggle" href="#">Advanced Options</a>
 
-    {# <div class="section show_formats"> #}
-    {#     <h2>Show Formats:</h2> #}
-    {#     <ul class="checkbox_list clearfix"> #}
-    {#         {% for format in all_formats|dictsort:'name' %} #}
-    {#             <li><input type="checkbox" name="selected_formats" value="{{ format.slug }}" {% if format.slug in selected_formats %}checked="checked"{% endif %}/> {{ format.name }}</li> #}
-    {#         {% endfor %} #}
-    {#     </ul> #}
-    {# </div> #}
-
-    
     
     <input type="submit" value="Submit" />
     <input type="reset" value="Reset">

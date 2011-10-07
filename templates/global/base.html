@@ -79,10 +79,10 @@
                     {% block sidebar_content %}{% endblock %}
                     
                     {% if request.user.is_staff %}
-                        {% include "dataexplorer/sidebar_admin.html" %}
+                        {# include "sidebars/admin.html" #}
                     {% else %}
                         <div class="section get_help_cta">
-                            <a href="#">&raquo; Get help exploring our data</a>
+                            <a href="/help">&raquo; Get help exploring our data</a>
                         </div>
                     {% endif %}
                 

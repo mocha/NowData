@@ -1,8 +1,0 @@
-<li class="item {% cycle "even" "odd" %}">
-	<h4><a href="/indicators/{{ indicator.slug }}/{{ resource.slug }}">{{ resource.name }}</a></h4>
-	<p>
-		{% if resource.resource_format %}<strong>Format: </strong>{{ resource.resource_format.name }}<br />{% endif %}
-		{% if resource.file %}<strong>File: </strong>{{ resource.file.url }}<br />{% endif %}
-		
-	</p>
-</li>

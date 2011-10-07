@@ -31,7 +31,9 @@
 	<h3>Resources in this Indicator</h3>
 	<ul class="data_list">
 		{% for resource in indicator.resource_set.all %}
-			{% include "dataexplorer/_resource_compact.html" %}
+			<li class="item {% cycle "even" "odd" %}">
+      	<a href="/indicators/{{ indicator.slug }}/{{ resource.slug }}">{{ resource.name }}</a>
+      </li>
 		{% endfor %}
 	</ul>
 
