@@ -35,7 +35,7 @@ ul.topiclist h3 a:hover {
 }
 
 #left h2 {
-  font-size : 2.2em;
+  font-size : 1.8em;
   letter-spacing: -2px;
   font-weight: normal;
   font-style: normal;
@@ -62,6 +62,10 @@ ul.topiclist h3 a:hover {
   border-bottom : 1px solid #ccc;
 }
 
+#right .section .last {
+  border-bottom : none;
+}
+
 #right .section h2 {
   font-size : 1.4em;
   letter-spacing : -1px;
@@ -79,9 +83,9 @@ ul.topiclist h3 a:hover {
 }
 
 h1#pagetitle {
-  font-size : 3em;
+  font-size : 2.2em;
   font-weight: normal;
-  margin-bottom : 30px;
+  margin-bottom : 20px;
   letter-spacing : -2px;
   color : #db5e21;
   line-height : .9em;
@@ -93,7 +97,7 @@ h1#pagetitle em {
 }
 
 h2#pagesubtitle {
-  margin-top : -20px;
+  margin-top : -15px;
   font-size : 1.2em;
   font-style: italic;
   font-weight: normal;
@@ -152,10 +156,10 @@ h3 a {
 
 
 #header h1 a {
-  background: url(http://localhost/~mocha/nowdata-media/images/header.gif) no-repeat top left;
+  background: url(http://localhost/~mocha/nowdata-media/images/nowdata_header_logo.gif) no-repeat top left;
   display: block;
-  width: 948px;
-  height: 76px;
+  width: 273px;
+  height: 25px;
   text-indent: -9999px;
 }
 
@@ -475,5 +479,61 @@ a.options_toggle {
 
 
 .resource_list li {
-  margin-top : 1em;
+  margin-top : .1em;
+}
+
+.sidebar_tools ul.topiclist li {
+  padding-bottom : 0px;
+  margin-bottom: 0px;
+}
+
+
+
+
+
+.countylist li {
+  float: left;
+  width : 33%;
+}
+
+
+
+#right .section.nowtech h2 {
+  margin: 0px;
+  padding: 0px;
+  margin-bottom : 5px;
+}
+
+#right .section.nowtech h2 a {
+  background: url(http://localhost/~mocha/nowdata-media/images/nowtech_sidebarlogo.gif) no-repeat;
+  display: block;
+  height: 50px;
+  width : 248px;
+  text-indent: -9999px;
+}
+
+#right .section.nowtech p a {
+  text-decoration: none;
+  color: #666;
+  font-style: italic;
+}
+
+#right .section.nowtech p a:hover {
+  text-decoration: underline;
+}
+
+
+
+
+#right ul.indicatorlist li {
+  padding-bottom : .5em;
+}
+
+#right ul.indicatorlist a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#right ul.indicatorlist a:hover {
+  text-decoration: underline;
 }

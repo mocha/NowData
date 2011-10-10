@@ -10,7 +10,7 @@ def home_page(request):
     return render_to_response (
       'global/home.html', 
       {
-        'title': "Welcome <em>to NowData</em>", 
+        'title': "Data<em>Explorer</em>", 
         'subtitle': "Your Resource for Community Data, Now."
       }, 
       context_instance=RequestContext(request)
@@ -94,7 +94,7 @@ def all_indicators(request):
       if not title:
         title = "<em>Exploring:</em> " + Domain.objects.get(slug = selected_domain).name
       else: 
-        subtitle = "In the topic " + Domain.objects.get(slug = selected_domain).name
+        subtitle = subtitle + "Topics:" + Domain.objects.get(slug = selected_domain).name
     except: 
       domain_filter = Q()
       selected_domain = ""
@@ -112,25 +112,10 @@ def all_indicators(request):
         domaingroup = DomainGroup.objects.get(slug = selected_domaingroup)
         selected_domain = Domain.objects.get(name = domaingroup.domain).slug
         # debug = selected_domain
-      
-      if subtitle == "":
-        subtitle = "In subtopic " + DomainGroup.objects.get(slug = selected_domaingroup).name
-      else:
-        subtitle = subtitle + " and in subtopic " + DomainGroup.objects.get(slug = selected_domaingroup).name
+      subtitle = subtitle + "Subtopic: " + DomainGroup.objects.get(slug = selected_domaingroup).name + "<br />"
     except: 
       domaingroup_filter = Q()
       selected_domaingroup = ""
-
-
-    # try:
-    #   selected_formats = request.GET.getlist('selected_formats')
-    #   format_filter = reduce(operator.or_, [Q(resource__resource_format__slug = str(format)) for format in selected_formats])
-    #   selected_format_subtitle_list = ""
-    #   advanced_options = True
-    #   for format in selected_formats:
-    #     selected_format_subtitle_list = selected_format_subtitle_list + " " + format + ", "
-    #   subtitle = "Including indicators with " + selected_format_subtitle_list
-    # except: format_filter = Q()
 
 
     try: 
@@ -140,10 +125,7 @@ def all_indicators(request):
       advanced_options = True
       for county in selected_counties:
         selected_county_subtitle_list = selected_county_subtitle_list + " " + County.objects.get(slug=county).name + " County, "
-      if subtitle == "":
-        subtitle = "Including indicators with " + selected_county_subtitle_list
-      else:
-        subtitle = subtitle + selected_county_subtitle_list
+      subtitle = subtitle + "Counties: " + selected_county_subtitle_list + "<br />"
     except: county_filter = Q()
 
 
@@ -154,21 +136,32 @@ def all_indicators(request):
       advanced_options = True
       for geo in selected_geos:
         selected_geo_subtitle_list = selected_geo_subtitle_list + " " + Geo_Agg.objects.get(slug=geo).name + ", "
-      if subtitle == "":
-        subtitle = "Including indicators with " + selected_geo_subtitle_list
-      else:
-        subtitle = subtitle + selected_geo_subtitle_list 
+      subtitle = subtitle + "Scopes: " + selected_geo_subtitle_list + "<br />"
     except: geo_filter = Q()
+
+
+    try:
+      selected_formats = request.GET.getlist('selected_formats')
+      format_filter = reduce(operator.or_, [Q(resource__resource_format__slug = str(format)) for format in selected_formats])
+      selected_format_subtitle_list = ""
+      advanced_options = True
+      for format in selected_formats:
+        selected_format_subtitle_list = selected_format_subtitle_list + " " + format + ", "
+
+      subtitle = subtitle + "Formats: " + selected_format_subtitle_list + "<br />"
+
+
+    except: format_filter = Q()
 
     
     indicators = Indicator.objects.filter(
       search_filter,
       domain_filter,
       domaingroup_filter,
-      # format_filter,
+      format_filter,
       county_filter,
       geo_filter,
-    ).distinct()
+    ).distinct().order_by('id')
 
   else:
     indicators = Indicator.objects.all()
@@ -186,6 +179,16 @@ def all_indicators(request):
     all_domaingroups = []
     
   if not title: title = "<em>Exploring:</em> All Indicators"
+  
+  # add indicator resource metadata to indicator object
+  for indicator in indicators:
+    formats = ResourceFormat.objects.all()
+    indicator.formats = []
+    for format in formats:
+      format.count = Resource.objects.filter(resource_format = format).filter(indicator = indicator).distinct().count()
+      if format.count > 0:
+        indicator.formats.append(format)
+      
 
   return render_to_response (
       'dataexplorer/indicator_list.html',
@@ -218,15 +221,15 @@ def view_indicator(request, slug):
     for domaingroup in indicator.domaingroup.all(): indicator_domains.append(domaingroup.domain)
     indicator_domains = set(indicator_domains)
 
-    # try:
-    #   related_domaingroup = random.choice(indicator.domaingroup.all())
-    # except:
-    #   related_domaingroup = ""
-    # 
-    # try:
-    #   related_domaingroup_indicators = related_domaingroup.indicator_set.all()[:6]
-    # except:
-    #   related_domaingroup_indicators = ""
+    try:
+      related_domaingroup = random.choice(indicator.domaingroup.all())
+    except:
+      related_domaingroup = ""
+    
+    try:
+      related_domaingroup_indicators = related_domaingroup.indicator_set.all()[:2]
+    except:
+      related_domaingroup_indicators = ""
 
     return render_to_response (
         'dataexplorer/view_indicator.html', 
@@ -234,8 +237,8 @@ def view_indicator(request, slug):
           'indicator': indicator,
           'title': indicator.name,
           'indicator_domains':indicator_domains,
-          # 'related_domaingroup': related_domaingroup,
-          # 'related_domaingroup_indicators' : related_domaingroup_indicators,
+          'related_domaingroup': related_domaingroup,
+          'related_domaingroup_indicators' : related_domaingroup_indicators,
         }, 
         context_instance=RequestContext(request)
     )

@@ -15,10 +15,13 @@
     {% if indicator.resource_set.exists %}
     
     <div class="resource-list">
-        {{ indicator.resource_set.count }} Resources (<a href="#" class="toggle_resources">show</a>)
+        
+        {% for format in indicator.formats %}
+          {{ format.count }} {{ format.name }}{% ifnotequal format.count 1 %}s{% endifnotequal %}, {% endfor %}{{ indicator.resource_set.count }} Resource{% ifnotequal indicator.resource_set.count 1 %}s{% endifnotequal %} Total (<a href="#" class="toggle_resources">view</a>)
+
         <ul class="resource_list toggleable_item">
          {% for resource in indicator.resource_set.all %}
-            <li>{{ resource.name }}</li>
+            <li>{{ resource.name }}{% if resource.resource_format %} ({{ resource.resource_format.name}}){% endif %}</li>
          {% endfor %}
         </ul>
     </div>

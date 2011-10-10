@@ -87,11 +87,11 @@
 
 {% block sidebar_content %}
 
-    {% if related_domain %}
+    {% if related_domaingroup %}
     <div class="section related_indicators">
-        <h3>Other Resources in this Topic ({{ related_domain.name }}):</h3>
-        <ul class="topiclist clearfix">
-            {% for indicator in related_domain_indicators %}
+        <h2>Other indicators in <br />{{ related_domaingroup.name }}:</h2>
+        <ul class="indicatorlist clearfix">
+            {% for indicator in related_domaingroup_indicators %}
                 <li><a href="/indicators/{{ indicator.slug }}">{{ indicator.name }}</a></li>
             {% endfor %}
         </ul>

@@ -80,12 +80,12 @@
                     
                     {% if request.user.is_staff %}
                         {# include "sidebars/admin.html" #}
-                    {% else %}
-                        <div class="section get_help_cta">
-                            <a href="/help">&raquo; Get help exploring our data</a>
-                        </div>
                     {% endif %}
-                
+
+                    <div class="section get_help_cta last">
+                        <a href="/help">&raquo; Get help exploring our data</a>
+                    </div>
+
                 </div>
                 
             </div>

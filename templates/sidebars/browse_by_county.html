@@ -1,12 +1,10 @@
 <div class="section browse_by_county">
     <h2>Browse by County</h2>
-    <form name="form" id="my_form"> 
-        <select name="jump_menu" id="jump_menu" onchange="jump(this, 'parent')">
-        <option name="">Select a County</option>
-        <option name="">---------------</option>
-        {% for county in sidebar_counties %}
-            <option name="{{ county.name }}" value="/events/tagged/active">{{ county.name }}</option>
-        {% endfor %}
-        </select>
-    </form>
+
+    <ul class="countylist clearfix">
+    {% for county in sidebar_counties|dictsort:"name" %}
+      <li><a href="/indicators/?selected_counties={{ county.slug }}">{{ county.name }}</a></li>
+    {% endfor %}
+    </ul>
+
 </div>
