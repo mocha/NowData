@@ -154,12 +154,11 @@ h3 a {
 #menu li a.nowtech:hover,
 #menu li a.nowtech.active { background-position: -837px -48px; }
 
-
 #header h1 a {
-  background: url(http://localhost/~mocha/nowdata-media/images/nowdata_header_logo.gif) no-repeat top left;
+  background: url(http://localhost/~mocha/nowdata-media/images/nowdata_page_header.gif) no-repeat top left;
   display: block;
-  width: 273px;
-  height: 25px;
+  width: 948px;
+  height: 76px;
   text-indent: -9999px;
 }
 

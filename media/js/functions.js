@@ -26,7 +26,7 @@ $(document).ready(function(){
   // });
 
 
-  $('a.options_toggle.options_hidden').click(function(event){
+  $('a.options_toggle.options_hidden').live('click', function(event){
     event.preventDefault();
     $(this).prev().dequeue().slideDown();
     $(this).text("Hide These Options");
@@ -36,7 +36,7 @@ $(document).ready(function(){
   });
   
   
-  $('a.options_toggle.options_shown').click(function(event){
+  $('a.options_toggle.options_shown').live('click', function(event){
     event.preventDefault();
     $(this).prev().dequeue().slideUp();
     $(this).text("Show More Options");
