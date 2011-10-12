@@ -69,6 +69,7 @@ def all_indicators(request):
   selected_domain = ""
   search_query = ""
   selected_domaingroup = ""
+  selected_focusproject = ""
   advanced_options = False
   
   
