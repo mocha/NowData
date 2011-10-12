@@ -106,19 +106,27 @@ class Geo_Agg(models.Model):
 class Source(models.Model):
     name = models.CharField(max_length=255, unique=True)
     display_name = models.CharField(max_length=255, blank=True)
-    display_url = models.URLField(blank=True)
-    dataset_name = models.CharField(max_length=255, blank=True)
+    source_url = models.URLField(blank=True)
+    notes = models.TextField(blank=True)
+    slug = AutoSlugField(populate_from='name', unique_with='name')
+    def __str__(self): return self.name
+    def __unicode__(self): return u'%s' % (self.name)
+    class Meta: ordering = ["name"]
+
+
+class Dataset(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    source = models.ForeignKey(Source)
+    display_name = models.CharField(max_length=255, blank=True)
+    dataset_url = models.URLField(blank=True)
     contact_name = models.CharField(max_length=255, blank=True)
     contact_email = models.EmailField(blank=True)
     contact_phone = models.CharField(max_length=255, blank=True)
     notes = models.TextField(blank=True)
-    added_on = models.DateTimeField(auto_now_add = True)
-    added_by = models.ForeignKey(User, related_name="sources_added")
-    modified_on = models.DateTimeField(auto_now = True)
-    modified_by = models.ForeignKey(User, related_name = "sources_modified")
     slug = AutoSlugField(populate_from='name', unique_with='name')
     def __str__(self): return self.name
-
+    def __unicode__(self): return u'%s' % (self.name)
+    class Meta: ordering = ["name"]
 
 
 class FocusProject(models.Model):
@@ -137,7 +145,7 @@ class Indicator(models.Model):
     description = models.TextField(blank=True)
     year_start = models.IntegerField()
     year_end = models.IntegerField()
-    source = models.ForeignKey(Source, blank=True, null=True)
+    dataset = models.ForeignKey(Dataset, blank=True, null=True)
     counties = models.ManyToManyField(County, blank = True)
     levels_of_aggregation = models.ManyToManyField(Geo_Agg, blank=True)
     # domain = models.ManyToManyField(Domain, blank = True)
@@ -180,35 +188,3 @@ class Indicator(models.Model):
     Restraints = models.TextField(blank=True, null=True)
     Files = models.TextField(blank=True, null=True)
     Spec_Proj = models.TextField(blank=True, null=True)
-
-
-
-
-
-class IndicatorGroup(models.Model):
-  DomainID = models.IntegerField()
-  IndicatorGroupID = models.IntegerField()
-  IndicatorID = models.IntegerField()
-
-
-
-
-class ResourceFile(models.Model):
-
-  _data = models.TextField(db_column='data', blank=True)
-  def set_data(self, data): self._data = base64.encodestring(data)
-  def get_data(self): return base64.decodestring(self._data)
-  data = property(get_data, set_data)
-
-  IndicatorResourceID = models.TextField(blank=True, null=True)
-  ProtectionCode = models.TextField(blank=True, null=True)
-  AppType = models.TextField(blank=True, null=True)
-  DocType = models.TextField(blank=True, null=True)
-  DocSize = models.TextField(blank=True, null=True)
-  DocDescription = models.TextField(blank=True, null=True)
-  # Doc = models.TextField(blank=True, null=True)
-  UploadUser = models.TextField(blank=True, null=True)
-  DateUpdated = models.TextField(blank=True, null=True)
-  IPAddress = models.TextField(blank=True, null=True)
-
-

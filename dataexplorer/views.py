@@ -40,8 +40,7 @@ def services_page(request):
     return render_to_response (
       'global/services.html', 
       {
-        'title': "Community <em>Services</em>", 
-        # 'subtitle': "Your Resource for Community Data, Now."
+        'title': "Community <em>Resources</em>",
       }, 
       context_instance=RequestContext(request)
     )

@@ -8,7 +8,7 @@ from nowdata.dataexplorer.models import *
 class IndicatorAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('name', 'description', 'year_start', 'year_end', 'source', 'counties', 'levels_of_aggregation', 'domaingroup', 'focusproject', 'status', 'notes', 'admin_only_notes')
+            'fields': ('name', 'description', 'year_start', 'year_end', 'dataset', 'counties', 'levels_of_aggregation', 'domaingroup', 'focusproject', 'status', 'notes', 'admin_only_notes')
         }),
         # ('Admin Options', {
         #     'classes': ('collapse', 'extrapretty'),
@@ -48,5 +48,6 @@ admin.site.register(Domain)
 admin.site.register(DomainGroup)
 admin.site.register(Geo_Agg)
 admin.site.register(Source)
+admin.site.register(Dataset)
 admin.site.register(Indicator, IndicatorAdmin)
 admin.site.register(FocusProject)

@@ -16,6 +16,8 @@
 
 {% if indicator.resource_set.all %}
 
+  <hr />
+
 	<h3>Resources in this Indicator</h3>
 	<ul class="resource_list">
 		{% for resource in indicator.resource_set.all %}
@@ -70,6 +72,22 @@
 	</ul>
 {% endif %}
 
+
+{% if indicator.dataset %}
+
+  <hr />
+  <h3>Source:</h3>
+  <p>{{ indicator.dataset.source.display_name }}<br />
+  <a href="{{ indicator.dataset.source.source_url }}">{{ indicator.dataset.source.source_url }}</a></p>
+  
+  <h3>Dataset:</h3>
+  <p>{{ indicator.dataset.display_name }}<br />
+  <a href="{{ indicator.dataset.dataset_url }}">{{ indicator.dataset.dataset_url }}</a></p>
+
+
+{% endif %}
+
+
 {% if indicator.notes %}
   <div class="notes public_notes">
     <h3>Notes:</h3>
@@ -79,7 +97,7 @@
 
 {% if request.user.is_staff %}
 	{% if indicator.admin_only_notes %}
-		<div class="notes indicator">
+		<div class="notes admin_only_notes">
 			<h3>Staff Notes:</h3>
 			<p>{{ indicator.admin_only_notes|urlize|linebreaks }}</p>
 		</div>
