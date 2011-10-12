@@ -106,14 +106,18 @@ def all_indicators(request):
     # set the subdomain
     try:
       selected_domaingroup = request.GET['domaingroup']
-      domaingroup_filter = Q(domaingroup__slug = selected_domaingroup)
-      if selected_domaingroup: advanced_options = True
-
-      if (not selected_domain) or (selected_domain == ""):
-        domaingroup = DomainGroup.objects.get(slug = selected_domaingroup)
-        selected_domain = Domain.objects.get(name = domaingroup.domain).slug
-        # debug = selected_domain
-      subtitle = subtitle + "Subtopic: " + DomainGroup.objects.get(slug = selected_domaingroup).name + "<br />"
+      if selected_domaingroup:
+        domaingroup_filter = Q(domaingroup__slug = selected_domaingroup)
+        if selected_domaingroup: advanced_options = True
+  
+        if (not selected_domain) or (selected_domain == ""):
+          domaingroup = DomainGroup.objects.get(slug = selected_domaingroup)
+          selected_domain = Domain.objects.get(name = domaingroup.domain).slug
+          # debug = selected_domain
+        subtitle = subtitle + "Subtopic: " + DomainGroup.objects.get(slug = selected_domaingroup).name + "<br />"
+      else:
+        domaingroup_filter = Q()
+        selected_domaingroup = ""
     except: 
       domaingroup_filter = Q()
       selected_domaingroup = ""
@@ -121,12 +125,15 @@ def all_indicators(request):
 
     try: 
       selected_counties = request.GET.getlist('selected_counties')
-      county_filter = reduce(operator.or_, [Q(counties__slug = str(county)) for county in selected_counties])      
-      selected_county_subtitle_list = ""
-      advanced_options = True
-      for county in selected_counties:
-        selected_county_subtitle_list = selected_county_subtitle_list + " " + County.objects.get(slug=county).name + " County, "
-      subtitle = subtitle + "Counties: " + selected_county_subtitle_list + "<br />"
+      if selected_counties:
+        county_filter = reduce(operator.or_, [Q(counties__slug = str(county)) for county in selected_counties])      
+        selected_county_subtitle_list = ""
+        advanced_options = True
+        for county in selected_counties:
+          selected_county_subtitle_list = selected_county_subtitle_list + " " + County.objects.get(slug=county).name + " County, "
+        subtitle = subtitle + "Counties: " + selected_county_subtitle_list + "<br />"
+      else:
+        county_filter = Q()  
     except: county_filter = Q()
 
 
@@ -184,7 +191,7 @@ def all_indicators(request):
 
   all_formats = ResourceFormat.objects.all()
   all_geos = Geo_Agg.objects.all()
-  all_domains = Domain.objects.all()
+  all_domains = Domain.objects.exclude(id=99)
   all_focusprojects = FocusProject.objects.all()
 
   if selected_domain:

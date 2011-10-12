@@ -4,11 +4,8 @@ from django.db.models import Count
 
 
 def sidebar_domains(request):
-  # domains = Domain.objects.annotate(Count('indicator')).order_by('-indicator__count')[:6]
-  
-  domains = Domain.objects.all()
-  # popular_tags = Tag.objects.filter(Q(event__place__city__subdomain = request.subdomain) & Q(event__start__gte = now)).exclude(name="Adult").annotate(event_count = Count('event')).order_by('event_count').distinct()[0:8]
-  domains = Domain.objects.annotate(indicator_count = Count('domaingroup__indicator')).order_by('-indicator_count')
+
+  domains = Domain.objects.exclude(id=99).annotate(indicator_count = Count('domaingroup__indicator')).order_by('-indicator_count')
   
   top_domains = []
   domains_more = []
