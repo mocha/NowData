@@ -11,6 +11,21 @@ ul.topiclist h3 a:hover {
   text-decoration: underline;
 }
 
+#left h3 {
+  font-size: 1.2em;
+  margin-bottom : 10px;
+}
+
+#left h3 a {
+  color : #333;
+  text-decoration: none;
+}
+
+#left h3 a:hover {
+  color : #000;
+  text-decoration: underline;
+}
+
 #container {
   width: 948px;
   margin: auto;
@@ -535,4 +550,14 @@ a.options_toggle {
 
 #right ul.indicatorlist a:hover {
   text-decoration: underline;
+}
+
+
+.floatright {
+  float: right;
+  margin : 0 0 20px 20px;
+}
+
+img.floatright {
+
 }
