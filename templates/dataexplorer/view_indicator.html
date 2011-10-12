@@ -25,7 +25,8 @@
         {% else %}
           {{ resource.name }}
         {% endif %}
-      	{% if resource.resource_format %}<br /><span class="metainfo format">{{ resource.resource_format.name }}</span>{% endif %}
+      	{% if resource.resource_format %}<br /><span class="metainfo format">{{ resource.resource_format.name }}{% endif %}{% if request.user.is_staff %} (<a href="/admin/dataexplorer/resource/{{ resource.id }}/" target="_blank">edit this resource</a>){% endif %}</span>
+
       </li>
 		{% endfor %}
 	</ul>
@@ -69,13 +70,18 @@
 	</ul>
 {% endif %}
 
+{% if indicator.notes %}
+  <div class="notes public_notes">
+    <h3>Notes:</h3>
+    <p>{{ indicator.notes|urlize|linebreaks }}</p>
+  </div>
+{% endif %}
 
 {% if request.user.is_staff %}
-	{% if indicator.notes %}
-	    <hr />
+	{% if indicator.admin_only_notes %}
 		<div class="notes indicator">
 			<h3>Staff Notes:</h3>
-			<p>{{ indicator.notes|urlize|linebreaks }}</p>
+			<p>{{ indicator.admin_only_notes|urlize|linebreaks }}</p>
 		</div>
 	{% endif %}
 {% endif %}
@@ -86,6 +92,17 @@
 
 
 {% block sidebar_content %}
+
+  {% if request.user.is_staff %}
+
+    <div class="section admin_options">
+      
+      <h2><a href="/admin/dataexplorer/indicator/{{ indicator.id }}/" target="_blank">Edit this Indicator</a></h2>
+      
+    </div>
+
+  {% endif %}
+
 
     {% if related_domaingroup %}
     <div class="section related_indicators">
