@@ -95,6 +95,16 @@
       {% endfor %}
       </ul>
       </div>
+      
+      <div class="section show_focusprojects inline_form_items">
+          <h2>Focus Project:</h2>
+          <select name="focusproject">
+              <option value="">All Focus Projects</option>
+              {% for focusproject in all_focusprojects %}
+                  <option name="focusproject" value="{{ focusproject.slug }}" {% ifequal selected_focusproject focusproject.slug %}selected="selected"{% endifequal %}>{{ focusproject.name }}</option>
+              {% endfor %}
+          </select>
+      </div>
   
   </div>
   

@@ -39,6 +39,7 @@ class Resource(models.Model):
     variables = models.ManyToManyField(ResourceVariable, blank=True)
     slug = AutoSlugField(populate_from='name', unique_with='name')
     notes = models.TextField(blank=True, null=True)
+    admin_only_notes = models.TextField(blank=True, null=True)
     added_on = models.DateTimeField(auto_now_add = True, blank=True, null=True)
     added_by = models.ForeignKey(User, related_name = "resources_added", blank=True, null=True)
     modified_on = models.DateTimeField(auto_now = True, blank=True, null=True)
@@ -120,6 +121,16 @@ class Source(models.Model):
 
 
 
+class FocusProject(models.Model):
+  name = models.CharField(max_length=255, unique=True)
+  short_description = models.TextField(blank=True)
+  full_description = models.TextField(blank=True)
+  slug = AutoSlugField(populate_from='name', unique_with='name')
+  def __str__(self): return self.name
+  def __unicode__(self): return u'%s' % (self.name)
+  class Meta: ordering = ["name"]
+
+
 
 class Indicator(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -132,12 +143,14 @@ class Indicator(models.Model):
     # domain = models.ManyToManyField(Domain, blank = True)
     domaingroup = models.ManyToManyField(DomainGroup, blank=True)
 
-    in_focus = models.BooleanField()
+    focusproject = models.ForeignKey(FocusProject, blank=True, null=True)
+
     STATUS_CHOICES = ( (0, 'Unknown'), (1, 'Started, Incomplete'), (2, 'In Progress'), (3, 'Completed'), )
     status = models.IntegerField(choices=STATUS_CHOICES)
 
     slug = AutoSlugField(populate_from='name', unique_with='name')
     notes = models.TextField(blank=True, null=True)
+    admin_only_notes = models.TextField(blank=True, null=True)
     added_on = models.DateTimeField(auto_now_add = True, blank=True, null=True)
     added_by = models.ForeignKey(User, related_name = "indicators_added", blank=True, null=True)
     modified_on = models.DateTimeField(auto_now = True, blank=True, null=True)
@@ -147,11 +160,6 @@ class Indicator(models.Model):
     def __unicode__(self): return u'%s' % (self.name)
     class Meta: ordering = ["name"]
     
-    # import fields - disable after data import is complete
-    IndicatorID = models.TextField(blank=True, null=True)
-    OldIndicatorID = models.TextField(blank=True, null=True)
-    Enabled = models.TextField(blank=True, null=True)
-    IndicatorName = models.TextField(blank=True, null=True)
     CategorizedBy = models.TextField(blank=True, null=True)
     Date_Acq = models.TextField(blank=True, null=True)
     RenewalDate = models.TextField(blank=True, null=True)
@@ -164,29 +172,6 @@ class Indicator(models.Model):
     Secondary2ContactID = models.TextField(blank=True, null=True)
     DataSource_url = models.TextField(blank=True, null=True)
     Intermediary_Contact = models.TextField(blank=True, null=True)
-    # Co_All = models.TextField(blank=True, null=True)
-    # Co_Bexar = models.TextField(blank=True, null=True)
-    # Co_Atascosa = models.TextField(blank=True, null=True)
-    # Co_Bandera = models.TextField(blank=True, null=True)
-    # Co_Comal = models.TextField(blank=True, null=True)
-    # Co_Frio = models.TextField(blank=True, null=True)
-    # Co_Gillespie = models.TextField(blank=True, null=True)
-    # Co_Guadalupe = models.TextField(blank=True, null=True)
-    # Co_Karnes = models.TextField(blank=True, null=True)
-    # Co_Kendall = models.TextField(blank=True, null=True)
-    # Co_Kerr = models.TextField(blank=True, null=True)
-    # Co_Medina = models.TextField(blank=True, null=True)
-    # Co_Wilson = models.TextField(blank=True, null=True)
-    # Geog_County = models.TextField(blank=True, null=True)
-    # Geog_City = models.TextField(blank=True, null=True)
-    # Geog_Zip = models.TextField(blank=True, null=True)
-    # Geog_Address = models.TextField(blank=True, null=True)
-    # Geog_Census_Tract = models.TextField(blank=True, null=True)
-    # Geog_Blk_Group = models.TextField(blank=True, null=True)
-    # Geog_County_Precinct = models.TextField(blank=True, null=True)
-    # Geog_City_Council_District = models.TextField(blank=True, null=True)
-    # Geog_School_District = models.TextField(blank=True, null=True)
-    # Geog_Other = models.TextField(blank=True, null=True)
     DataPeriod = models.TextField(blank=True, null=True)
     Time_Unit = models.TextField(blank=True, null=True)
     Suggest_Denom = models.TextField(blank=True, null=True)
@@ -225,6 +210,5 @@ class ResourceFile(models.Model):
   UploadUser = models.TextField(blank=True, null=True)
   DateUpdated = models.TextField(blank=True, null=True)
   IPAddress = models.TextField(blank=True, null=True)
-
 
 

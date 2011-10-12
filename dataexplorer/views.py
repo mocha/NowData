@@ -11,7 +11,7 @@ def home_page(request):
       'global/home.html', 
       {
         'title': "Data<em>Explorer</em>", 
-        'subtitle': "Your Resource for Community Data, Now."
+        # 'subtitle': "Your Resource for Community Data, Now."
       }, 
       context_instance=RequestContext(request)
     )
@@ -21,7 +21,7 @@ def about_page(request):
       'global/about.html', 
       {
         'title': "About <em>NowData</em>", 
-        'subtitle': "Your Resource for Community Data, Now."
+        # 'subtitle': "Your Resource for Community Data, Now."
       }, 
       context_instance=RequestContext(request)
     )
@@ -41,7 +41,7 @@ def services_page(request):
       'global/services.html', 
       {
         'title': "Community <em>Services</em>", 
-        'subtitle': "Your Resource for Community Data, Now."
+        # 'subtitle': "Your Resource for Community Data, Now."
       }, 
       context_instance=RequestContext(request)
     )
@@ -149,10 +149,20 @@ def all_indicators(request):
         selected_format_subtitle_list = selected_format_subtitle_list + " " + format + ", "
 
       subtitle = subtitle + "Formats: " + selected_format_subtitle_list + "<br />"
-
-
     except: format_filter = Q()
 
+
+    # set the focusproject
+    try:
+      selected_focusproject = request.GET['focusproject']
+      focusproject_filter = Q(focusproject__slug = selected_focusproject)
+      subtitle = subtitle + "Project:" + FocusProject.objects.get(slug = selected_focusproject).name
+      advanced_options = True
+    except: 
+      focusproject_filter = Q()
+      selected_focusproject = ""
+
+    
     
     indicators = Indicator.objects.filter(
       search_filter,
@@ -161,6 +171,7 @@ def all_indicators(request):
       format_filter,
       county_filter,
       geo_filter,
+      focusproject_filter,
     ).distinct().order_by('id')
 
   else:
@@ -173,6 +184,8 @@ def all_indicators(request):
   all_formats = ResourceFormat.objects.all()
   all_geos = Geo_Agg.objects.all()
   all_domains = Domain.objects.all()
+  all_focusprojects = FocusProject.objects.all()
+
   if selected_domain:
     all_domaingroups = DomainGroup.objects.filter(domain__slug = selected_domain)
   else:
@@ -196,17 +209,25 @@ def all_indicators(request):
         'indicators': indicators, 
         'title': title,
         'subtitle': subtitle,
-        'all_formats':all_formats,
-        'all_geos':all_geos,
-        'all_domains':all_domains,
-        'all_domaingroups':all_domaingroups,
-        'search_query':search_query,
-        'selected_domain':selected_domain,
-        'selected_domaingroup':selected_domaingroup,
-        'selected_formats':selected_formats,
-        'selected_counties':selected_counties,
-        'selected_geos':selected_geos,
         'advanced_options':advanced_options,
+        'search_query':search_query,
+        
+        'all_formats':all_formats,
+        'selected_formats':selected_formats,
+        
+        'all_geos':all_geos,
+        'selected_geos':selected_geos,
+        
+        'all_domains':all_domains,
+        'selected_domain':selected_domain,
+        
+        'all_domaingroups':all_domaingroups,
+        'selected_domaingroup':selected_domaingroup,
+
+        'selected_focusproject':selected_focusproject,
+        'all_focusprojects':all_focusprojects,
+        
+        'selected_counties':selected_counties,
         # 'debug':debug,
       }, 
       context_instance=RequestContext(request)
