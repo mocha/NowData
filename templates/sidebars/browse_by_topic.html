@@ -5,7 +5,7 @@
 <div class="section browse_by_topic">
     <h2>Browse by Topic</h2>
     <ul class="topiclist clearfix">
-        {% for domain in sidebar_domains_top %}
+        {% for domain in sidebar_domains %}
             <li>
                 <a href="/indicators/?domain={{ domain.slug }}" class="topic_icon {{ domain.slug }}">
                     <span class="icon">{{ domain.slug }}</span>
@@ -14,17 +14,4 @@
             </li>
         {% endfor %}
     </ul>
-
-    <ul class="topiclist more clearfix">
-        {% for domain in sidebar_domains_more %}
-            <li>
-                <a href="/indicators/?domain={{ domain.slug }}" class="topic_icon {{ domain.slug }}">
-                    <span class="icon">{{ domain.slug }}</span>
-                <h3><a href="/indicators/?domain={{ domain.slug }}">{{ domain.name }}</a>
-                    <span class="metadata">{{ domain.indicator_count }} Indicators</h3>
-            </li>
-        {% endfor %}
-    </ul>
-    
-    <p><a href="#" class="readmorelink reveal">&raquo; View All Topics</a></p>
 </div>

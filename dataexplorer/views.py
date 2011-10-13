@@ -129,7 +129,7 @@ def all_indicators(request):
         selected_county_subtitle_list = ""
         advanced_options = True
         for county in selected_counties:
-          selected_county_subtitle_list = selected_county_subtitle_list + " " + County.objects.get(slug=county).name + " County, "
+          selected_county_subtitle_list = selected_county_subtitle_list + " " + County.objects.get(slug=county).name + ", "
         subtitle = subtitle + "Counties: " + selected_county_subtitle_list + "<br />"
       else:
         county_filter = Q()  
@@ -163,7 +163,7 @@ def all_indicators(request):
     try:
       selected_focusproject = request.GET['focusproject']
       focusproject_filter = Q(focusproject__slug = selected_focusproject)
-      subtitle = subtitle + "Project:" + FocusProject.objects.get(slug = selected_focusproject).name
+      subtitle = subtitle + "Project: " + FocusProject.objects.get(slug = selected_focusproject).name
       advanced_options = True
     except: 
       focusproject_filter = Q()
