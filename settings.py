@@ -48,6 +48,7 @@ MIDDLEWARE_CLASSES = (
   'django.contrib.auth.middleware.AuthenticationMiddleware',
   'django.contrib.messages.middleware.MessageMiddleware',
   'pagination.middleware.PaginationMiddleware',
+  'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
 ROOT_URLCONF = 'nowdata.urls'
@@ -72,4 +73,5 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'nowdata.dataexplorer',
   	'pagination',
+  	'django.contrib.flatpages',
 )

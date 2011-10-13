@@ -4,59 +4,6 @@ from nowdata.dataexplorer.models import *
 from django.db.models import Count, Q
 
 
-
-
-def home_page(request):
-    return render_to_response (
-      'global/home.html', 
-      {
-        'title': "Data<em>Explorer</em>", 
-        # 'subtitle': "Your Resource for Community Data, Now."
-      }, 
-      context_instance=RequestContext(request)
-    )
-
-def about_page(request):
-    return render_to_response (
-      'global/about.html', 
-      {
-        'title': "About <em>NowData</em>", 
-        # 'subtitle': "Your Resource for Community Data, Now."
-      }, 
-      context_instance=RequestContext(request)
-    )
-
-def contact_page(request):
-    return render_to_response (
-      'global/contact.html', 
-      {
-        'title': "Contact <em>Us</em>", 
-        'subtitle': "Please fill out the short form below and we will respond within forty-eight hours. Thanks!"
-      }, 
-      context_instance=RequestContext(request)
-    )
-
-def services_page(request):
-    return render_to_response (
-      'global/services.html', 
-      {
-        'title': "Community <em>Resources</em>",
-      }, 
-      context_instance=RequestContext(request)
-    )
-
-
-def help_page(request):
-    return render_to_response (
-      'global/help.html', 
-      {
-        'title': "Help and FAQs", 
-      }, 
-      context_instance=RequestContext(request)
-    )
-
-
-
 import operator
 def all_indicators(request):
   
@@ -273,55 +220,6 @@ def view_indicator(request, slug):
 
 
 
-
-def all_domains(request):
-    domains = Domain.objects.all()
-    domains = Domain.objects.annotate(Count('indicator')).order_by('-indicator__count')
-    
-    return render_to_response (
-        'dataexplorer/all_topics.html',
-        {
-            'domains': domains,
-            'title': '<em>Exploring:</em> All Domains',
-            'subtitle': "Listing all domains in our database"
-        }, context_instance=RequestContext(request)
-    )
-
-
-
-
-from django.db.models import Min, Max
-def all_years(request):
-    year_range = Indicator.objects.exclude(year_start = 0).aggregate(min_year=Min('year_start'), max_year=Max('year_end'))
-    years = []
-    for n in range(year_range['min_year'], year_range['max_year']):
-        years.append(n)
-    return render_to_response(
-        'dataexplorer/all_years.html',
-        { 
-          'years': years,
-          'title': "<em>Exploring:</em> All Years",
-        },
-        context_instance=RequestContext(request)
-    )
-
-
-
-
-def view_year(request, year):
-    indicators = Indicator.objects.filter(year_start__lte = int(year)).filter(year_end__gte = int(year))
-    return render_to_response(
-        'dataexplorer/indicator_list.html', 
-        {
-          'indicators':indicators,
-          'title': "<em>Indicators covering:</em> " + year, 
-        },
-        context_instance=RequestContext(request)
-    )
-
-
-
-
 def view_resource_iframe(request, indicator_slug, resource_slug):
     indicator = Indicator.objects.get(slug = indicator_slug)
     resource = Resource.objects.get(slug = resource_slug)
@@ -351,8 +249,6 @@ def admin_indicators_recently_added(request):
   )
 
 
-
-
 def admin_indicators_without_resources(request):
   indicators = Indicator.objects.filter(resource = None).order_by("added_on")
   return render_to_response (
@@ -364,20 +260,6 @@ def admin_indicators_without_resources(request):
       }, 
       context_instance=RequestContext(request)
   )
-
-
-
-
-def admin_indicator_new(request):
-  return
-
-
-
-
-def admin_indicator_edit(request):
-  return
-
-
 
 
 def admin_indicators_by_status(request, status_code):
@@ -397,25 +279,5 @@ def admin_indicators_by_status(request, status_code):
       }, 
       context_instance=RequestContext(request)
   )
-
-
-
-
-def admin_resource_new(request):
-  return
-
-
-
-
-def admin_resource_edit(request):
-  return
-
-
-
-
-def admin_resources_recently_added(request):
-  return
-
-
 
 

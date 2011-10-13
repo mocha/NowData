@@ -78,14 +78,14 @@
                 <div class="inner">
                 
                     {% block sidebar_content %}{% endblock %}
+                    <div class="section get_help_cta last">
+                        <a href="/help">&raquo; Get help exploring our data</a>
+                    </div>
                     
                     {% if request.user.is_staff %}
                         {# include "sidebars/admin.html" #}
                     {% endif %}
 
-                    <div class="section get_help_cta last">
-                        <a href="/help">&raquo; Get help exploring our data</a>
-                    </div>
 
                 </div>
                 

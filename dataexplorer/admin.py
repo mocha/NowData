@@ -1,5 +1,6 @@
 from django.contrib import admin
 from nowdata.dataexplorer.models import *
+from django.contrib.flatpages.models import FlatPage
 
 # add one of these for each model:
 # admin.site.register(ModelName)

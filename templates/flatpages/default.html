@@ -1,0 +1,25 @@
+{% extends "global/base.html" %}
+{% block content %}
+
+  <h1 id="pagetitle">{{ flatpage.title }}</h1>
+
+  {{ flatpage.content }}
+
+{% endblock %}
+
+{% block sidebar_content %}
+    
+    {% include "sidebars/browse_by_topic.html" %}
+    {% include "sidebars/browse_by_county.html" %}
+    {% include "sidebars/sidebar_tools.html" %}
+    
+{% endblock %}
+
+
+
+
+
+
+
+
+
