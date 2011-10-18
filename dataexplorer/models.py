@@ -1,6 +1,7 @@
 from django.db import models
 from autoslug.fields import AutoSlugField
 from django.contrib.auth.models import User
+from filer.fields.image import FilerImageField, FilerFileField
 import base64
 
 
@@ -11,14 +12,10 @@ class County(models.Model):
     def __str__(self): return self.name
 
 
-
-
 class ResourceFormat(models.Model):
     name = models.CharField(max_length=255, unique=True)
     slug = AutoSlugField(populate_from='name', unique_with='name')
     def __str__(self): return self.name
-
-
 
 
 class ResourceVariable(models.Model):
@@ -28,14 +25,12 @@ class ResourceVariable(models.Model):
     class Meta: ordering = ["name"]
 
 
-
-
 class Resource(models.Model):
     name = models.CharField(max_length=255, unique=True)
     indicator = models.ForeignKey("Indicator")
     resource_format = models.ForeignKey(ResourceFormat, null=True)
     url = models.URLField(blank=True, null=True)
-    resource_file = models.FileField(upload_to="somewhere/", blank=True)
+    resource_file = models.FileField(upload_to="uploads/%Y/%m/%d", blank=True)
     variables = models.ManyToManyField(ResourceVariable, blank=True)
     slug = AutoSlugField(populate_from='name', unique_with='name')
     notes = models.TextField(blank=True, null=True)
@@ -69,8 +64,6 @@ class Resource(models.Model):
     CatVar3Heading = models.TextField(blank=True, null=True)
 
 
-
-
 class Domain(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True, null=True)
@@ -79,8 +72,6 @@ class Domain(models.Model):
     slug = AutoSlugField(populate_from='name', unique_with='name')
     def __str__(self): return self.name
     class Meta: ordering = ["name"]
-
-
 
 
 class DomainGroup(models.Model):
@@ -92,15 +83,11 @@ class DomainGroup(models.Model):
     class Meta: ordering = ["name"]
 
 
-
-
 class Geo_Agg(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True) 
     slug = AutoSlugField(populate_from='name', unique_with='name')
     def __str__(self): return self.name
-
-
 
 
 class Source(models.Model):
@@ -139,7 +126,6 @@ class FocusProject(models.Model):
   class Meta: ordering = ["name"]
 
 
-
 class Indicator(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True)
@@ -148,14 +134,10 @@ class Indicator(models.Model):
     dataset = models.ForeignKey(Dataset, blank=True, null=True)
     counties = models.ManyToManyField(County, blank = True)
     levels_of_aggregation = models.ManyToManyField(Geo_Agg, blank=True)
-    # domain = models.ManyToManyField(Domain, blank = True)
     domaingroup = models.ManyToManyField(DomainGroup, blank=True)
-
     focusproject = models.ForeignKey(FocusProject, blank=True, null=True)
-
     STATUS_CHOICES = ( (0, 'Unknown'), (1, 'Started, Incomplete'), (2, 'In Progress'), (3, 'Completed'), )
     status = models.IntegerField(choices=STATUS_CHOICES)
-
     slug = AutoSlugField(populate_from='name', unique_with='name')
     notes = models.TextField(blank=True, null=True)
     admin_only_notes = models.TextField(blank=True, null=True)
@@ -188,3 +170,17 @@ class Indicator(models.Model):
     Restraints = models.TextField(blank=True, null=True)
     Files = models.TextField(blank=True, null=True)
     Spec_Proj = models.TextField(blank=True, null=True)
+
+
+class Document(models.Model):
+  resource_file = models.FileField(upload_to="uploads/%Y/%m/%d", blank=True)
+  added_on = models.DateTimeField(auto_now_add = True)
+  added_by = models.ForeignKey(User)
+  notes = models.TextField(blank=True, null=True)
+
+  def __str__(self): return self.name
+  def __unicode__(self): return u'%s' % (self.name)
+  class Meta: ordering = ["added_on"]
+
+
+

@@ -52,3 +52,8 @@ admin.site.register(Source)
 admin.site.register(Dataset)
 admin.site.register(Indicator, IndicatorAdmin)
 admin.site.register(FocusProject)
+admin.site.register(Document)
+
+
+
+

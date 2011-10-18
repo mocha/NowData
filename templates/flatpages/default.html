@@ -9,6 +9,12 @@
 
 {% block sidebar_content %}
     
+    {% if request.user.is_staff %}
+        <div class="section admin_options">
+            <h2><a href="/admin/flatpages/flatpage/{{ flatpage.id }}">Edit this page</a></h2>
+        </div>
+    {% endif %}    
+    
     {% include "sidebars/browse_by_topic.html" %}
     {% include "sidebars/browse_by_county.html" %}
     {% include "sidebars/sidebar_tools.html" %}
