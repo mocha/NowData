@@ -1,7 +1,6 @@
 from django.db import models
 from autoslug.fields import AutoSlugField
 from django.contrib.auth.models import User
-from filer.fields.image import FilerImageField, FilerFileField
 import base64
 import os.path
 
