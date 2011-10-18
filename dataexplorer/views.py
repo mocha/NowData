@@ -281,3 +281,18 @@ def admin_indicators_by_status(request, status_code):
   )
 
 
+
+
+
+def all_documents(request):
+  documents = Document.objects.all()
+  
+  return render_to_response (
+    'global/all_documents.html',
+    {
+      'title':"All Documents",
+      'subtitle':'Newest documents first',
+      'documents':documents,
+    },
+    context_instance=RequestContext(request) 
+  )

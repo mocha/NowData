@@ -1,0 +1,37 @@
+{% extends "global/base.html" %}
+{% block content %}
+{% if request.user.is_staff %}
+
+<table class="filetable">
+    
+    <tr>
+        <th>Document Name</th>
+        <th>Document Link</th>
+        <th></th>
+    </tr>
+
+{% for document in documents %}
+
+    <tr class="{% cycle 'odd' 'even' %}">
+        <td>{{ document.name }}<br />
+            <span class="metainfo">{{ document.added_on }}</span></td>
+        <td><a href="{{ document.attached_file.url }}">{{ document.filename }}</a></td>
+        <td><a href="/admin/dataexplorer/document/{{ document.id }}/">Edit</td>
+    </tr>
+
+{% endfor %}
+
+</table>
+
+{% endif %}    
+{% endblock %}
+
+{% block sidebar_content %}
+
+<div class="section admin_options">
+    <h2><a href="/admin/dataexplorer/document/add/" target="_blank">Upload a document</a></h2>
+</div>
+
+
+{% endblock %}
+

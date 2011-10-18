@@ -14,6 +14,8 @@ urlpatterns = patterns('',
   (r'^indicators/(?P<indicator_slug>[-\w]+)/(?P<resource_slug>[-\w]+)$', view_resource_iframe),
   
   # administrative views
+
+  (r'^documents/$', all_documents),
   
   (r'^indicators/recently_added/$', admin_indicators_recently_added),
   (r'^indicators/without_resources/$', admin_indicators_without_resources),

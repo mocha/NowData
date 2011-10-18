@@ -3,7 +3,7 @@ from autoslug.fields import AutoSlugField
 from django.contrib.auth.models import User
 from filer.fields.image import FilerImageField, FilerFileField
 import base64
-
+import os.path
 
 class County(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -173,14 +173,19 @@ class Indicator(models.Model):
 
 
 class Document(models.Model):
-  resource_file = models.FileField(upload_to="uploads/%Y/%m/%d", blank=True)
+  name = models.CharField(max_length=255, unique=True)
+  attached_file = models.FileField(upload_to="uploads/%Y/%m/%d")
   added_on = models.DateTimeField(auto_now_add = True)
   added_by = models.ForeignKey(User)
-  notes = models.TextField(blank=True, null=True)
+  notes = models.TextField(blank=True)
 
   def __str__(self): return self.name
   def __unicode__(self): return u'%s' % (self.name)
-  class Meta: ordering = ["added_on"]
+  class Meta: ordering = ["-id"]
+  
+  def filename(self):
+      return os.path.basename(self.attached_file.name)
+
 
 
 
