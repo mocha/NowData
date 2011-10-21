@@ -147,7 +147,7 @@ class Indicator(models.Model):
 
     def __str__(self): return self.name
     def __unicode__(self): return u'%s' % (self.name)
-    class Meta: ordering = ["name"]
+    class Meta: ordering = ["-id"]
     
     CategorizedBy = models.TextField(blank=True, null=True)
     Date_Acq = models.TextField(blank=True, null=True)
