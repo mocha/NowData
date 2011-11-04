@@ -1,0 +1,33 @@
+{% extends "global/base.html" %}
+
+{% load pagination_tags %}
+
+{% block content %}
+
+<table class="filetable">
+
+    <tr>
+        
+        <th>Resource Name</th>
+        <th></th>
+        
+    </tr>
+
+	{% for resource in resources %}
+
+		<tr class="item resource {% cycle "even" "odd" %}">
+
+		    <td>
+		        <a href="/indicators/{{ resource.indicator.slug }}">{{ resource.name }}</a><br />
+                <span class="metainfo">{{ resource.indicator.name }}</span>
+            </td>
+            		    
+		    <td><a href="/admin/dataexplorer/resource/{{ resource.id }}/" target="_blank">edit</a></td>
+
+		</tr>
+
+	{% endfor %}
+
+</table>
+
+{% endblock %}

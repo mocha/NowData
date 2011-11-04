@@ -1,0 +1,45 @@
+{% extends "global/base.html" %}
+
+{% load pagination_tags %}
+
+{% block content %}
+
+    {% ifnotequal indicators.count 0 %}
+      <div class="num_results">{{ indicators.count }} indicators found.</div>
+    {% endifnotequal %}
+
+
+
+<table class="filetable">
+
+    <tr>
+
+        <th>Indicator Name</th>
+        <th></th>
+
+    </tr>
+
+	{% for indicator in indicators %}
+
+		<tr class="item indicator {% cycle "even" "odd" %}">
+
+		    <td>
+		        <a href="/indicators/{{ indicator.slug }}">{{ indicator.name }}</a>
+            </td>
+
+		    <td><a href="/admin/dataexplorer/indicator/{{ indicator.id }}/" target="_blank">edit</a></td>
+
+		</tr>
+
+	{% endfor %}
+
+</table>
+
+
+{% endblock %}
+
+
+{% block sidebar_content %}
+
+
+{% endblock %}

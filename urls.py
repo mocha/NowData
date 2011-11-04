@@ -17,8 +17,13 @@ urlpatterns = patterns('',
 
   (r'^documents/$', all_documents),
   
-  (r'^indicators/recently_added/$', admin_indicators_recently_added),
-  (r'^indicators/without_resources/$', admin_indicators_without_resources),
-  (r'^indicators/by_status/(?P<status_code>[\d]{1})$', admin_indicators_by_status),
+  (r'^nowdata-admin/resources/unlinked/', admin_resources_unlinked),
+  (r'^nowdata-admin/resources/no-indicator/', admin_resources_noindicator),
+
+  (r'^nowdata-admin/indicators/no-description/', admin_indicators_nodescription),
+  (r'^nowdata-admin/indicators/no-resources/', admin_indicators_noresources),
+  (r'^nowdata-admin/indicators/by_status/(?P<status_code>[\d]{1})$', admin_indicators_by_status),
+
+#  (r'^indicators/without_resources/$', admin_indicators_without_resources),
 
 )

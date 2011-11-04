@@ -602,10 +602,10 @@ img.floatright {
 }
 
 .filetable .metainfo {
-    color: #CCCCCC;
+    color: #666;
     display: block;
     font-size: 0.9em;
-    letter-spacing: -1px;
+    letter-spacing: 0px;
     line-height: 0.8em;
     margin: 0;
     padding: 0;

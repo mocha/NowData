@@ -85,7 +85,7 @@
                     </div>
                     
                     {% if request.user.is_staff %}
-                        {# include "sidebars/admin.html" #}
+                        {% include "sidebars/admin.html" %}
                     {% endif %}
 
 

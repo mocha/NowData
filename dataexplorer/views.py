@@ -236,54 +236,6 @@ def view_resource_iframe(request, indicator_slug, resource_slug):
 
 
 
-def admin_indicators_recently_added(request):
-  indicators = Indicator.objects.all().order_by("-added_on")
-  return render_to_response (
-      'dataexplorer/indicator_list.html',
-      { 
-        'indicators': indicators, 
-        'title': "<em>Admin:</em> Recently Added Indicators", 
-        'subtitle': "Newest indicators are at the top"
-      }, 
-      context_instance=RequestContext(request)
-  )
-
-
-def admin_indicators_without_resources(request):
-  indicators = Indicator.objects.filter(resource = None).order_by("added_on")
-  return render_to_response (
-      'dataexplorer/indicator_list.html',
-      { 
-        'indicators': indicators, 
-        'title': "<em>Admin:</em> Indicators lacking Resources", 
-        'subtitle': "Oldest indicators are at the top"
-      }, 
-      context_instance=RequestContext(request)
-  )
-
-
-def admin_indicators_by_status(request, status_code):
-  indicators = Indicator.objects.filter(status = status_code).order_by("added_on")
-  if status_code == "0": code_name = "Unknown"
-  elif status_code == "1": code_name = "Incomplete"
-  elif status_code == "2": code_name = "In Progress"
-  elif status_code == "3": code_name = "Completed"
-  else: code_name = "ERR"
-  
-  return render_to_response (
-      'dataexplorer/indicator_list.html',
-      { 
-        'indicators': indicators, 
-        'title': "<em>Indicators Coded:</em> " + code_name, 
-        'subtitle': "Oldest indicators are at the top"
-      }, 
-      context_instance=RequestContext(request)
-  )
-
-
-
-
-
 def all_documents(request):
   documents = Document.objects.all()
   
@@ -296,3 +248,82 @@ def all_documents(request):
     },
     context_instance=RequestContext(request) 
   )
+
+
+
+
+
+
+
+
+def admin_indicators_by_status(request, status_code):
+  indicators = Indicator.objects.filter(status = status_code).order_by("added_on")
+  if status_code == "0": code_name = "Unknown"
+  elif status_code == "1": code_name = "Incomplete"
+  elif status_code == "2": code_name = "In Progress"
+  elif status_code == "3": code_name = "Completed"
+  else: code_name = "ERR"
+
+  return render_to_response (
+  'dataexplorer/admin_indicator_list.html',
+      { 
+        'indicators': indicators, 
+        'title': "<em>Admin:</em> Indicators marked " + code_name, 
+        'subtitle': "Oldest indicators are at the top"
+      }, 
+      context_instance=RequestContext(request)
+  )
+
+
+def admin_indicators_nodescription(request):
+  indicators = Indicator.objects.filter(description = "").order_by("added_on")
+  return render_to_response (
+  'dataexplorer/admin_indicator_list.html',
+      { 
+        'indicators': indicators, 
+        'title': "<em>Admin:</em> Indicators without descriptions", 
+        'subtitle': "Oldest indicators are at the top"
+      }, 
+      context_instance=RequestContext(request)
+  )
+
+
+def admin_indicators_noresources(request):
+  indicators = Indicator.objects.filter(resource = None).order_by("added_on")
+  return render_to_response (
+      'dataexplorer/admin_indicator_list.html',
+      { 
+        'indicators': indicators, 
+        'title': "<em>Admin:</em> Indicators lacking resources", 
+        'subtitle': "Oldest indicators are at the top"
+      }, 
+      context_instance=RequestContext(request)
+  )
+
+
+def admin_resources_unlinked(request):
+  resources = Resource.objects.filter(url = "").order_by("added_on")
+  return render_to_response (
+      'dataexplorer/admin_resource_list.html',
+      { 
+        'resources': resources, 
+        'title': "<em>Admin:</em> Resources without links or files", 
+        'subtitle': "Oldest resources are at the top"
+      }, 
+      context_instance=RequestContext(request)
+  )
+
+
+def admin_resources_noindicator(request):
+  resources = Resource.objects.filter(url = "").order_by("added_on")
+  return render_to_response (
+      'dataexplorer/admin_resource_list.html',
+      { 
+        'resources': resources, 
+        'title': "<em>Admin:</em> Resources unattached to indicators", 
+        'subtitle': "Oldest indicators are at the top"
+      }, 
+      context_instance=RequestContext(request)
+  )
+
+
