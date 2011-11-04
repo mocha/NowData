@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from nowdata.dataexplorer.models import *
 from django.db.models import Count, Q
+from django.contrib.auth.decorators import login_required
 
 
 import operator
@@ -236,6 +237,7 @@ def view_resource_iframe(request, indicator_slug, resource_slug):
 
 
 
+@login_required
 def all_documents(request):
   documents = Document.objects.all()
   
@@ -256,6 +258,7 @@ def all_documents(request):
 
 
 
+@login_required
 def admin_indicators_by_status(request, status_code):
   indicators = Indicator.objects.filter(status = status_code).order_by("added_on")
   if status_code == "0": code_name = "Unknown"
@@ -275,6 +278,7 @@ def admin_indicators_by_status(request, status_code):
   )
 
 
+@login_required
 def admin_indicators_nodescription(request):
   indicators = Indicator.objects.filter(description = "").order_by("added_on")
   return render_to_response (
@@ -288,6 +292,7 @@ def admin_indicators_nodescription(request):
   )
 
 
+@login_required
 def admin_indicators_noresources(request):
   indicators = Indicator.objects.filter(resource = None).order_by("added_on")
   return render_to_response (
@@ -301,6 +306,7 @@ def admin_indicators_noresources(request):
   )
 
 
+@login_required
 def admin_resources_unlinked(request):
   resources = Resource.objects.filter(url = "").order_by("added_on")
   return render_to_response (
@@ -314,6 +320,7 @@ def admin_resources_unlinked(request):
   )
 
 
+@login_required
 def admin_resources_noindicator(request):
   resources = Resource.objects.filter(url = "").order_by("added_on")
   return render_to_response (
