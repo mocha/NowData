@@ -9,7 +9,7 @@ from django.contrib.flatpages.models import FlatPage
 class IndicatorAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('name', 'description', 'year_start', 'year_end', 'dataset', 'counties', 'levels_of_aggregation', 'domaingroup', 'focusproject', 'status', 'notes', 'admin_only_notes')
+            'fields': ('name', 'description', 'year_start', 'year_end', 'dataset', 'counties', 'levels_of_aggregation', 'domaingroup', 'focusproject', 'status', 'notes', 'admin_only_notes', 'hidden_from_public')
         }),
         # ('Admin Options', {
         #     'classes': ('collapse', 'extrapretty'),

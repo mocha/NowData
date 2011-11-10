@@ -144,6 +144,7 @@ class Indicator(models.Model):
     added_by = models.ForeignKey(User, related_name = "indicators_added", blank=True, null=True)
     modified_on = models.DateTimeField(auto_now = True, blank=True, null=True)
     modified_by = models.ForeignKey(User, related_name = "", blank=True, null=True)
+    hidden_from_public = models.BooleanField()
 
     def __str__(self): return self.name
     def __unicode__(self): return u'%s' % (self.name)
