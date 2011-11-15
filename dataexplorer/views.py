@@ -127,10 +127,10 @@ def all_indicators(request):
       county_filter,
       geo_filter,
       focusproject_filter,
-    ).distinct().exclude(hidden_from_public = True).order_by('id')
+    ).distinct().exclude(hidden_from_public = True).order_by('-id')
 
   else:
-    indicators = Indicator.objects.exclude(hidden_from_public = True).order_by('id')
+    indicators = Indicator.objects.exclude(hidden_from_public = True).order_by('-id')
     subtitle = "Listing all indicators in our database"
     domain = ""
     format = ""

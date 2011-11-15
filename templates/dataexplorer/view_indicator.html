@@ -20,7 +20,7 @@
 
 	<h3>Resources in this Indicator</h3>
 	<ul class="resource_list">
-		{% for resource in indicator.resource_set.all %}
+		{% for resource in indicator.resource_set.all|dictsortreversed:"id" %}
 			<li class="item {% cycle "even" "odd" %}">
       	{% if resource.url or resource.resource_file %}
           <a href="/indicators/{{ indicator.slug }}/{{ resource.slug }}">{{ resource.name }}</a>
