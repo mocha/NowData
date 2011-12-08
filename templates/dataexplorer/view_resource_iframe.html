@@ -24,7 +24,7 @@
 	
 	<div id="rightside">
 		<ul>
-			<li><a href="{{ resource.url }}">Remove Frame</a></li>
+			<li><a href="{% if resource.resource_file %}{{ resource.resource_file.url }}{% else %}{{ resource.url }}{% endif %}">Remove Frame</a></li>
 		</ul>
 	</div>
 	
