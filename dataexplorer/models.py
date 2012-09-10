@@ -30,6 +30,7 @@ class Resource(models.Model):
     resource_format = models.ForeignKey(ResourceFormat, null=True)
     url = models.URLField(blank=True, null=True)
     resource_file = models.FileField(upload_to="uploads/%Y/%m/%d", blank=True)
+    no_iframe = models.BooleanField()
     variables = models.ManyToManyField(ResourceVariable, blank=True)
     slug = AutoSlugField(populate_from='name', unique_with='name')
     notes = models.TextField(blank=True, null=True)

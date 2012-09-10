@@ -25,7 +25,7 @@ def all_indicators(request):
     try:
       search_query = request.GET['search_query']
       if search_query != "":
-        search_filter = Q(name__icontains = search_query)
+        search_filter = Q(name__icontains = search_query) | Q(description__icontains = search_query) | Q(resource__name__icontains = search_query)
         title = "<em>Indicators matching:</em> \"" + search_query + "\""
       else:
         search_filter = Q()

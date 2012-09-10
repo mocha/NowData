@@ -27,7 +27,7 @@ class IndicatorAdmin(admin.ModelAdmin):
 class ResourceAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('name', 'indicator', 'resource_format', 'url', 'resource_file', 'notes', 'admin_only_notes')
+            'fields': ('name', 'indicator', 'resource_format', 'url', 'resource_file', 'notes', 'admin_only_notes','no_iframe')
         }),
         ('Legacy Data', {
             'classes': ('collapse',),

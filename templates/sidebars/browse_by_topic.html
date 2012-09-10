@@ -9,7 +9,7 @@
             <li>
                 <a href="/indicators/?domain={{ domain.slug }}" class="topic_icon {{ domain.slug }}">
                     <span class="icon">{{ domain.slug }}</span></a>
-                <h3><a href="/indicators/?domain={{ domain.slug }}">{{ domain.name }}</a></h3>
+                <a href="/indicators/?domain={{ domain.slug }}">{{ domain.name }}</a>
                 <span class="metadata">{{ domain.indicator_count }} Indicators</span>
             </li>
         {% endfor %}

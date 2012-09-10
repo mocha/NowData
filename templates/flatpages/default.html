@@ -8,12 +8,26 @@
 {% endblock %}
 
 {% block sidebar_content %}
-    
+
     {% if request.user.is_staff %}
         <div class="section admin_options">
             <h2><a href="/admin/flatpages/flatpage/{{ flatpage.id }}">Edit this page</a></h2>
         </div>
-    {% endif %}    
+
+    {% endif %}
+
+    <form id="form1" method="get" action="/indicators/">
+
+         <h4>Keyword Search:</h4>
+
+         <div class="input-append">
+            <input class="span3" id="appendedInputButton" size="16" type="text" name="search_query" value="{{ search_query }}">
+            <button type="submit" class="btn" type="button">Search</button>
+        </div>
+     
+    </form>
+
+    <hr />
     
     {% include "sidebars/browse_by_topic.html" %}
     {% include "sidebars/browse_by_county.html" %}
