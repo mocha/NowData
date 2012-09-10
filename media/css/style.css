@@ -1,12 +1,12 @@
 /*
   
   exporting to server:
-  find: url(http://localhost:8888/
-  replace: url(http://localhost:8888/
+  find: url(/media/
+  replace: url(/media/
   
   resetting for local dev:
-  find: url(http://localhost:8888/
-  replace: url(http://localhost:8888/
+  find: url(/media/
+  replace: url(/media/
 
 */
 
@@ -14,7 +14,7 @@ body {
   font-size: 10pt;
   line-height: 1.4em;
   color: #333;
-  background: #E3E3E3 url(http://localhost:8888/images/gradient_bg.gif) repeat-x;
+  background: #E3E3E3 url(/media/images/gradient_bg.gif) repeat-x;
 }
 
 a,
@@ -42,12 +42,12 @@ ul.topiclist h3 a:hover {
 #container {
   width: 948px;
   margin: auto;
-  background: white url(http://localhost:8888/images/body_bg_pattern.gif) repeat-y;
+  background: white url(/media/images/body_bg_pattern.gif) repeat-y;
   padding-bottom : 40px;
 }
 
 #container-inner {
-  background: url(http://localhost:8888/images/body_bg.jpg) no-repeat;
+  background: url(/media/images/body_bg.jpg) no-repeat;
 }
 
 #header {
@@ -146,7 +146,7 @@ h3 a {
   margin: 0;
   padding: 0;
   list-style: none;
-  background-image: url(http://localhost:8888/images/nowdata_menu_2.gif);
+  background-image: url(/media/images/nowdata_menu_2.gif);
 }
 
 #menu li {
@@ -158,7 +158,7 @@ h3 a {
 #menu li a {
   display: block;
   height: 40px;
-  background-image: url(http://localhost:8888/images/nowdata_menu_2.gif);
+  background-image: url(/media/images/nowdata_menu_2.gif);
   background-repeat: no-repeat;
   text-indent: -9999px;
   margin-top: 4px;
@@ -190,7 +190,7 @@ h3 a {
 #menu li a.nowtech.active { background-position: -837px -48px; }
 
 #header h1 a {
-  background: url(http://localhost:8888/images/nowdata_header_2.gif) top left;
+  background: url(/media/images/nowdata_header_2.gif) top left;
   display: block;
   width: 950px;
   height: 75px;
@@ -366,35 +366,35 @@ ul.topiclist .metadata {
 }
 
 .topiclist .health-and-safety .icon {
-  background: url(http://localhost:8888/images/topic_icons/HealthSafety.gif) no-repeat;
+  background: url(/media/images/topic_icons/HealthSafety.gif) no-repeat;
 }
 
 .topiclist .employment-economy .icon {
-  background: url(http://localhost:8888/images/topic_icons/employmenteconomy.gif) no-repeat;
+  background: url(/media/images/topic_icons/employmenteconomy.gif) no-repeat;
 }
 
 .topiclist .education .icon {
-  background: url(http://localhost:8888/images/topic_icons/education.gif) no-repeat;
+  background: url(/media/images/topic_icons/education.gif) no-repeat;
 }
 
 .topiclist .people .icon {
-  background: url(http://localhost:8888/images/topic_icons/People.gif) no-repeat;
+  background: url(/media/images/topic_icons/People.gif) no-repeat;
 }
 
 .topiclist .built-natural-environment .icon {
-  background: url(http://localhost:8888/images/topic_icons/builtnaturalenvironment.gif) no-repeat;
+  background: url(/media/images/topic_icons/builtnaturalenvironment.gif) no-repeat;
 }
 
 .topiclist .culture-civic-vitality .icon {
-  background: url(http://localhost:8888/images/topic_icons/CultureCivicVitality.gif) no-repeat;
+  background: url(/media/images/topic_icons/CultureCivicVitality.gif) no-repeat;
 }
 
 .crosstabs.icon {
-  background: url(http://localhost:8888/images/icon_crosstab_30x30.gif) no-repeat;
+  background: url(/media/images/icon_crosstab_30x30.gif) no-repeat;
 }
 
 .weave.icon {
-  background: url(http://localhost:8888/images/icon_weave_30x30.gif) no-repeat;
+  background: url(/media/images/icon_weave_30x30.gif) no-repeat;
 }
 
 
@@ -543,7 +543,7 @@ a.options_toggle {
 }
 
 #right .section.nowtech h2 a {
-  background: url(http://localhost:8888/images/nowtech_sidebarlogo.gif) no-repeat;
+  background: url(/media/images/nowtech_sidebarlogo.gif) no-repeat;
   display: block;
   height: 50px;
   width : 248px;
